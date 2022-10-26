@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
+    var scale = Scale
+    var counter: Int = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -14,16 +16,19 @@ class MainActivity : AppCompatActivity() {
 
     fun onButtonClick(View: View) {
         val textView: TextView = findViewById(R.id.textView)
-        textView.text = "Hello kotlin"
-        var scale: Float = 1f
-        if (scale < 10) {
-            textView.scaleX = textView.scaleX * scale
-            textView.scaleY = textView.scaleY * scale
-            scale += 1f
+
+        if (this.counter < 2) {
+            this.scale.scale += 1
+            textView.scaleX = textView.scaleX * this.scale.scale.toFloat()
+            textView.scaleY = textView.scaleY * this.scale.scale.toFloat()
+            this.counter += 1
         } else {
-            textView.scaleX = textView.scaleX * scale
-            textView.scaleY = textView.scaleY * scale
-            scale -= 2f
+            this.scale.scale = this.scale.scale * 0.5f
+            textView.scaleX = textView.scaleX * this.scale.scale * 0.5f
+            textView.scaleY = textView.scaleY * this.scale.scale * 0.5f
+            this.counter = 1
         }
+
+
     }
 }

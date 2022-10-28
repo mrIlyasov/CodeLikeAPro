@@ -29,12 +29,13 @@
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
     <ImageView
-        android:contentDescription="@string/author"
         android:id="@+id/avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+
+        android:contentDescription="@string/author"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/avatar_foreground" />
@@ -43,8 +44,10 @@
         android:id="@+id/author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/author"
         android:layout_marginStart="16dp"
+        android:text="@string/author"
+        android:textStyle="bold"
+        android:textColor="@color/colorLink"
         app:layout_constraintBottom_toTopOf="@+id/date"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toTopOf="@id/avatar"
@@ -62,7 +65,7 @@
     <androidx.constraintlayout.widget.Barrier
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:barrierDirection="top"
+        app:barrierDirection="bottom"
         app:constraint_referenced_ids="date,author,avatar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

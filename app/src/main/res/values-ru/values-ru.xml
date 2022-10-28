@@ -3,4 +3,6 @@
     <string name="app_name">НМедиа</string>
     <string name="textForTextView">НМедиа</string>
     <string name="textForButton">БУТТОН</string>
+    <string name="author">Нетология. Университет интернет-профессий</string>
+    <string name="date">27 октября в 22:19</string>
 </resources>

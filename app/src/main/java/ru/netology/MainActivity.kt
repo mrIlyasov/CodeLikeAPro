@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
 
     fun onButtonClick2(View: View) {
-        val textView: TextView = findViewById(R.id.textView)
+        val textView: TextView = findViewById(R.id.content)
         if (this.boolean==false) {
             textView.scaleX = 1f
             textView.scaleY = 1f

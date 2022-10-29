@@ -23,14 +23,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+
         android:singleLine="true"
         android:text="@string/author"
         android:textColor="@color/colorLink"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/date"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/more_button"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toTopOf="@id/avatar"
         app:layout_constraintVertical_chainStyle="packed" />
@@ -44,12 +44,24 @@
         app:layout_constraintStart_toStartOf="@id/author"
         app:layout_constraintTop_toBottomOf="@+id/author" />
 
+    <ImageButton
+        android:id="@+id/more_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toEndOf="@id/author"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/avatar"
+        app:layout_constraintTop_toBottomOf="@id/avatar"
+        app:srcCompat="@drawable/more_icon" />
+
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="date,author,avatar" />
+        app:constraint_referenced_ids="date,author,avatar, more_button"
+        tools:layout_editor_absoluteY="64dp" />
 
     <TextView
         android:id="@+id/content"
@@ -71,4 +83,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/content" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

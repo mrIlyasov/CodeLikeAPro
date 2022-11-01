@@ -2,4 +2,14 @@
     <string name="app_name">Nmedia</string>
     <string name="textForTextView">Nmedia</string>
     <string name="textForButton">BUTTON</string>
+    <string name="author">Нетология. Университет интернет-профессий</string>
+    <string name="date">Oct 27 at 22:19</string>
+    <string name="content">Привет, это новая Нетология! Когда-то Нетология начиналась с интенсива
+    по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, разработке и управлению. Мы
+    растём сами и помогаем расти студентам: от новичков до уверенных профессионалов.Привет, это новая Нетология! Когда-то Нетология начиналась с интенсива
+    по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, разработке и управлению. Мы
+    растём сами и помогаем расти студентам: от новичков до уверенных профессионалов.</string>
+    <string name="likesCount">10</string>
+    <string name="shareCount">5</string>
+    <string name="viewsCount">30</string>
 </resources>

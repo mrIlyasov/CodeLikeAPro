@@ -119,7 +119,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-
         android:backgroundTint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@id/like_button"
         app:layout_constraintEnd_toStartOf="@id/views_count"
@@ -147,6 +146,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/content" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/socialButtonsBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="views_count,share_count,share_button,likes_count,like_button,views_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/content" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

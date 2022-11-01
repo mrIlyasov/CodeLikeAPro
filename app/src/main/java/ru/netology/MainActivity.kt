@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
                 "уверенных профессионалов.Привет, это новая Нетология! Когда-то Нетология начиналась с " +
                 "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
                 "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                "уверенных профессионалов.", 100, 100, 10
+                "уверенных профессионалов.", 100, 100, 100
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,15 +34,15 @@ class MainActivity : AppCompatActivity() {
         var likesCountTextView: TextView = findViewById(R.id.likes_count)
         var repostCountTextView: TextView = findViewById(R.id.share_count)
         var viewsCountTextView: TextView = findViewById(R.id.views_count)
-        this.post.views += 990
-        this.post.repostsCount += 750
         this.post.likes += 890
+        this.post.repostsCount += 750
+        this.post.views += 990
         var likesCount = this.post.likes
         var repostsCount = this.post.repostsCount
         var viewsCount = this.post.views
-        viewsCountTextView.text = rounding(viewsCount)
-        repostCountTextView.text = rounding(repostsCount)
         likesCountTextView.text = rounding(likesCount)
+        repostCountTextView.text = rounding(repostsCount)
+        viewsCountTextView.text = rounding(viewsCount)
 
 
     }

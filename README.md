@@ -1,4 +1,4 @@
-# Задача 1.2. Ресурсы, View и ViewGroup
+# Задача «1.3. Constraint Layout»
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Netology_logo.svg/1176px-Netology_logo.svg.png)
 

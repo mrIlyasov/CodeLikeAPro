@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import ru.netology.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,30 +23,38 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        findViewById<TextView>(R.id.content).text = post.content
-        findViewById<TextView>(R.id.likes_count).text = post.likes.toString()
-        findViewById<TextView>(R.id.views_count).text = post.views.toString()
-        findViewById<TextView>(R.id.share_count).text = post.repostsCount.toString()
+
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        updatePostInfo()
+
+
+        binding.likeButton.setOnClickListener {
+            if (!post.likedByMe) {
+                binding.likeButton.setImageResource(R.drawable.ic_liked_icon)
+                post.likedByMe = true
+                post.likes += 1
+            } else {
+                binding.likeButton.setImageResource(R.drawable.heart_icon)
+                post.likedByMe = false
+                post.likes -= 1
+
+            }
+            updatePostInfo()
+        }
+
+        binding.button.setOnClickListener {
+            post.likes += 899
+            post.repostsCount += 750
+            post.views += 990
+            binding.likesCountTextView.text = rounding(this.post.likes)
+            binding.shareCountTextView.text = rounding(this.post.repostsCount)
+            binding.viewsCountTextView.text = rounding(this.post.views)
+        }
+
+
     }
 
-
-    fun onButtonClick2(View: View) {
-        var likesCountTextView: TextView = findViewById(R.id.likes_count)
-        var repostCountTextView: TextView = findViewById(R.id.share_count)
-        var viewsCountTextView: TextView = findViewById(R.id.views_count)
-        this.post.likes += 890
-        this.post.repostsCount += 750
-        this.post.views += 990
-        var likesCount = this.post.likes
-        var repostsCount = this.post.repostsCount
-        var viewsCount = this.post.views
-        likesCountTextView.text = rounding(likesCount)
-        repostCountTextView.text = rounding(repostsCount)
-        viewsCountTextView.text = rounding(viewsCount)
-
-
-    }
 
 
     fun rounding(value: Int): String {
@@ -76,5 +85,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun updatePostInfo() {
+        findViewById<TextView>(R.id.content).text = post.content
+        findViewById<TextView>(R.id.likesCountTextView).text = rounding(post.likes)
+        findViewById<TextView>(R.id.shareCountTextView).text = rounding(post.repostsCount)
+        findViewById<TextView>(R.id.viewsCountTextView).text = rounding(post.views)
+
+    }
 
 }

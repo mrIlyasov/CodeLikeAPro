@@ -43,6 +43,12 @@ class MainActivity : AppCompatActivity() {
             updatePostInfo()
         }
 
+        binding.shareButton.setOnClickListener{
+            post.repostsCount+=1
+            binding.shareCountTextView.text =  rounding(post.repostsCount)
+
+        }
+
         binding.button.setOnClickListener {
             post.likes += 899
             post.repostsCount += 750
@@ -58,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
 
     fun rounding(value: Int): String {
-        if (value > 1100 && value < 10000) {
+        if (value > 999 && value < 10000) {
             var symbol1 = value.toString()[0]
             var symbol2 = value.toString()[1]
             var stringToReturn = "$symbol1" + "," + "$symbol2" + "K"
@@ -67,14 +73,14 @@ class MainActivity : AppCompatActivity() {
             var symbol1 = value.toString()[0]
             var symbol2 = value.toString()[1]
             var symbol3 = value.toString()[2]
-            var stringToReturn = "$symbol1" + "$symbol2" + "," + "$symbol3" + "K"
+            var stringToReturn = "$symbol1" + "$symbol2" + "K"
             return (stringToReturn)
         } else if (value >= 100000 && value < 1_000_000) {
             var symbol1 = value.toString()[0]
             var symbol2 = value.toString()[1]
             var symbol3 = value.toString()[2]
             var symbol4 = value.toString()[3]
-            var stringToReturn = "$symbol1" + "$symbol2" + "$symbol3" + "," + "$symbol4" + "K"
+            var stringToReturn = "$symbol1" + "$symbol2" + "$symbol3"  + "K"
             return (stringToReturn)
         } else if (value > 1_000_000) {
             var symbol1 = value.toString()[0]
@@ -90,7 +96,6 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.likesCountTextView).text = rounding(post.likes)
         findViewById<TextView>(R.id.shareCountTextView).text = rounding(post.repostsCount)
         findViewById<TextView>(R.id.viewsCountTextView).text = rounding(post.views)
-
     }
 
 }

@@ -2,8 +2,8 @@ package ru.netology
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.TextView
+import ru.netology.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,34 +22,60 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        findViewById<TextView>(R.id.content).text = post.content
-        findViewById<TextView>(R.id.likes_count).text = post.likes.toString()
-        findViewById<TextView>(R.id.views_count).text = post.views.toString()
-        findViewById<TextView>(R.id.share_count).text = post.repostsCount.toString()
-    }
+
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        updatePostInfo()
 
 
-    fun onButtonClick2(View: View) {
-        var likesCountTextView: TextView = findViewById(R.id.likes_count)
-        var repostCountTextView: TextView = findViewById(R.id.share_count)
-        var viewsCountTextView: TextView = findViewById(R.id.views_count)
-        this.post.likes += 890
-        this.post.repostsCount += 750
-        this.post.views += 990
-        var likesCount = this.post.likes
-        var repostsCount = this.post.repostsCount
-        var viewsCount = this.post.views
-        likesCountTextView.text = rounding(likesCount)
-        repostCountTextView.text = rounding(repostsCount)
-        viewsCountTextView.text = rounding(viewsCount)
+        binding.root.setOnClickListener {
+            updatePostInfo()
+        }
+
+
+        binding.avatar.setOnClickListener() {
+           binding.content.text = ("Avatar clicked")
+        }
+
+        binding.moreButton.setOnClickListener {
+            binding.content.text = ("HI")
+        }
+
+        binding.likeButton.setOnClickListener {
+            if (!post.likedByMe) {
+                binding.likeButton.setImageResource(R.drawable.liked_icon)
+                post.likedByMe = true
+                post.likes += 1
+            } else {
+                binding.likeButton.setImageResource(R.drawable.heart_icon)
+                post.likedByMe = false
+                post.likes -= 1
+
+            }
+            updatePostInfo()
+        }
+
+        binding.shareButton.setOnClickListener {
+            post.repostsCount += 1
+            binding.shareCountTextView.text = rounding(post.repostsCount)
+
+        }
+
+        binding.button.setOnClickListener {
+            post.likes += 899
+            post.repostsCount += 750
+            post.views += 990
+            binding.likesCountTextView.text = rounding(this.post.likes)
+            binding.shareCountTextView.text = rounding(this.post.repostsCount)
+            binding.viewsCountTextView.text = rounding(this.post.views)
+        }
 
 
     }
 
 
     fun rounding(value: Int): String {
-        if (value > 1100 && value < 10000) {
+        if (value > 999 && value < 10000) {
             var symbol1 = value.toString()[0]
             var symbol2 = value.toString()[1]
             var stringToReturn = "$symbol1" + "," + "$symbol2" + "K"
@@ -58,14 +84,14 @@ class MainActivity : AppCompatActivity() {
             var symbol1 = value.toString()[0]
             var symbol2 = value.toString()[1]
             var symbol3 = value.toString()[2]
-            var stringToReturn = "$symbol1" + "$symbol2" + "," + "$symbol3" + "K"
+            var stringToReturn = "$symbol1" + "$symbol2" + "K"
             return (stringToReturn)
         } else if (value >= 100000 && value < 1_000_000) {
             var symbol1 = value.toString()[0]
             var symbol2 = value.toString()[1]
             var symbol3 = value.toString()[2]
             var symbol4 = value.toString()[3]
-            var stringToReturn = "$symbol1" + "$symbol2" + "$symbol3" + "," + "$symbol4" + "K"
+            var stringToReturn = "$symbol1" + "$symbol2" + "$symbol3" + "K"
             return (stringToReturn)
         } else if (value > 1_000_000) {
             var symbol1 = value.toString()[0]
@@ -76,5 +102,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun updatePostInfo() {
+        findViewById<TextView>(R.id.content).text = post.content
+        findViewById<TextView>(R.id.likesCountTextView).text = rounding(post.likes)
+        findViewById<TextView>(R.id.shareCountTextView).text = rounding(post.repostsCount)
+        findViewById<TextView>(R.id.viewsCountTextView).text = rounding(post.views)
+    }
 
 }

@@ -86,7 +86,7 @@
 
 
     <TextView
-        android:id="@+id/likes_count"
+        android:id="@+id/likesCountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/likesCount"
@@ -101,12 +101,12 @@
         android:layout_margin="16dp"
         android:backgroundTint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@id/like_button"
-        app:layout_constraintStart_toEndOf="@id/likes_count"
+        app:layout_constraintStart_toEndOf="@id/likesCountTextView"
         app:layout_constraintTop_toTopOf="@id/like_button"
         app:srcCompat="@drawable/share_icon" />
 
     <TextView
-        android:id="@+id/share_count"
+        android:id="@+id/shareCountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/shareCount"
@@ -121,26 +121,25 @@
         android:layout_marginStart="16dp"
         android:backgroundTint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@id/like_button"
-        app:layout_constraintEnd_toStartOf="@id/views_count"
+        app:layout_constraintEnd_toStartOf="@id/viewsCountTextView"
         app:layout_constraintTop_toTopOf="@id/like_button"
-        app:srcCompat="@drawable/ic_views_icon" />
+        app:srcCompat="@drawable/views_icon" />
 
 
     <TextView
-        android:id="@+id/views_count"
+        android:id="@+id/viewsCountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:text="@string/shareCount"
         app:layout_constraintBottom_toBottomOf="@id/like_button"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="16dp"
         app:layout_constraintTop_toTopOf="@id/like_button" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onButtonClick2"
         android:text="@string/textForButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -152,7 +151,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="views_count,share_count,share_button,likes_count,like_button,views_button"
+        app:constraint_referenced_ids="viewsCountTextView, shareCountTextView,share_button,likesCountTextView,like_button,views_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/content" />

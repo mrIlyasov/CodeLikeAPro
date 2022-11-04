@@ -123,7 +123,7 @@
         app:layout_constraintBottom_toBottomOf="@id/like_button"
         app:layout_constraintEnd_toStartOf="@id/viewsCountTextView"
         app:layout_constraintTop_toTopOf="@id/like_button"
-        app:srcCompat="@drawable/ic_views_icon" />
+        app:srcCompat="@drawable/views_icon" />
 
 
     <TextView

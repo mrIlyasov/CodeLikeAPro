@@ -2,7 +2,6 @@ package ru.netology
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.TextView
 import ru.netology.databinding.ActivityMainBinding
 
@@ -29,9 +28,22 @@ class MainActivity : AppCompatActivity() {
         updatePostInfo()
 
 
+        binding.root.setOnClickListener {
+            updatePostInfo()
+        }
+
+
+        binding.avatar.setOnClickListener() {
+           binding.content.text = ("Avatar clicked")
+        }
+
+        binding.moreButton.setOnClickListener {
+            binding.content.text = ("HI")
+        }
+
         binding.likeButton.setOnClickListener {
             if (!post.likedByMe) {
-                binding.likeButton.setImageResource(R.drawable.ic_liked_icon)
+                binding.likeButton.setImageResource(R.drawable.liked_icon)
                 post.likedByMe = true
                 post.likes += 1
             } else {
@@ -43,9 +55,9 @@ class MainActivity : AppCompatActivity() {
             updatePostInfo()
         }
 
-        binding.shareButton.setOnClickListener{
-            post.repostsCount+=1
-            binding.shareCountTextView.text =  rounding(post.repostsCount)
+        binding.shareButton.setOnClickListener {
+            post.repostsCount += 1
+            binding.shareCountTextView.text = rounding(post.repostsCount)
 
         }
 
@@ -60,7 +72,6 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
 
 
     fun rounding(value: Int): String {
@@ -80,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             var symbol2 = value.toString()[1]
             var symbol3 = value.toString()[2]
             var symbol4 = value.toString()[3]
-            var stringToReturn = "$symbol1" + "$symbol2" + "$symbol3"  + "K"
+            var stringToReturn = "$symbol1" + "$symbol2" + "$symbol3" + "K"
             return (stringToReturn)
         } else if (value > 1_000_000) {
             var symbol1 = value.toString()[0]

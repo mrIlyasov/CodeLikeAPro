@@ -25,21 +25,8 @@ class MainActivity : AppCompatActivity() {
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        updatePostInfo()
+        updatePostInfo(binding)
 
-
-        binding.root.setOnClickListener {
-            updatePostInfo()
-        }
-
-
-        binding.avatar.setOnClickListener() {
-           binding.content.text = ("Avatar clicked")
-        }
-
-        binding.moreButton.setOnClickListener {
-            binding.content.text = ("HI")
-        }
 
         binding.likeButton.setOnClickListener {
             if (!post.likedByMe) {
@@ -52,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 post.likes -= 1
 
             }
-            updatePostInfo()
+            updatePostInfo(binding)
         }
 
         binding.shareButton.setOnClickListener {
@@ -83,14 +70,13 @@ class MainActivity : AppCompatActivity() {
         } else if (value >= 10000 && value < 100_000) {
             var symbol1 = value.toString()[0]
             var symbol2 = value.toString()[1]
-            var symbol3 = value.toString()[2]
+
             var stringToReturn = "$symbol1" + "$symbol2" + "K"
             return (stringToReturn)
         } else if (value >= 100000 && value < 1_000_000) {
             var symbol1 = value.toString()[0]
             var symbol2 = value.toString()[1]
             var symbol3 = value.toString()[2]
-            var symbol4 = value.toString()[3]
             var stringToReturn = "$symbol1" + "$symbol2" + "$symbol3" + "K"
             return (stringToReturn)
         } else if (value > 1_000_000) {
@@ -102,11 +88,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun updatePostInfo() {
-        findViewById<TextView>(R.id.content).text = post.content
-        findViewById<TextView>(R.id.likesCountTextView).text = rounding(post.likes)
-        findViewById<TextView>(R.id.shareCountTextView).text = rounding(post.repostsCount)
-        findViewById<TextView>(R.id.viewsCountTextView).text = rounding(post.views)
+    fun updatePostInfo(binding: ActivityMainBinding) {
+        binding.content.text = post.content
+        binding.likesCountTextView.text = rounding(post.likes)
+        binding.shareCountTextView.text = rounding(post.repostsCount)
+        binding.viewsCountTextView.text = rounding(post.views)
+        binding.date.text = post.date
+        binding.author.text =  post.authorName
     }
+
 
 }

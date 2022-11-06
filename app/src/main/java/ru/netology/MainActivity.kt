@@ -3,6 +3,9 @@ package ru.netology
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import ru.netology.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -98,4 +101,10 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
+}
+
+class MainActivityViewModel: ViewModel(){
+    private val _uiState = MutableStateFlow(MainActivity())
+    val uiState: StateFlow<MainActivity> = _uiState
 }

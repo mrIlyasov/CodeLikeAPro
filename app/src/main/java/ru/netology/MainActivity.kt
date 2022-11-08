@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.StateFlow
 import ru.netology.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
-    var post: Post = Post(
+    lateinit var binding: ActivityMainBinding
+   /* var post: Post = Post(
         1,
         "Нетология. Университет интернет-профессий",
         "27 октября в 22:19",
@@ -21,46 +21,49 @@ class MainActivity : AppCompatActivity() {
                 "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
                 "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
                 "уверенных профессионалов.", 100, 100, 100
-    )
+    )*/
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        updatePostInfo(binding)
+        val viewModel: PostViewModel by viewModels()
 
 
-        binding.likeButton.setOnClickListener {
+       /* binding.likeButton.setOnClickListener {
+            val currentLikes = post.likes
             if (!post.likedByMe) {
                 binding.likeButton.setImageResource(R.drawable.liked_icon)
-                post.likedByMe = true
-                post.likes += 1
+
+                post = post.copy(likedByMe = true, likes = currentLikes + 1)
+
             } else {
                 binding.likeButton.setImageResource(R.drawable.heart_icon)
-                post.likedByMe = false
-                post.likes -= 1
+                post = post.copy(likedByMe = false, likes = currentLikes - 1)
+
 
             }
-            updatePostInfo(binding)
+            updatePostInfo()
         }
 
         binding.shareButton.setOnClickListener {
-            post.repostsCount += 1
+            post = post.copy(repostsCount = post.repostsCount + 1)
             binding.shareCountTextView.text = rounding(post.repostsCount)
 
         }
 
         binding.button.setOnClickListener {
-            post.likes += 899
-            post.repostsCount += 750
-            post.views += 990
-            binding.likesCountTextView.text = rounding(this.post.likes)
-            binding.shareCountTextView.text = rounding(this.post.repostsCount)
-            binding.viewsCountTextView.text = rounding(this.post.views)
+            post = post.copy(
+                likes = post.likes + 899,
+                repostsCount = post.repostsCount + 750,
+                views = post.views + 990
+            )
+            updatePostInfo()
         }
 
-
+*/
     }
 
 
@@ -91,20 +94,15 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun updatePostInfo(binding: ActivityMainBinding) {
+    fun updatePostInfo() {
         binding.content.text = post.content
         binding.likesCountTextView.text = rounding(post.likes)
         binding.shareCountTextView.text = rounding(post.repostsCount)
         binding.viewsCountTextView.text = rounding(post.views)
         binding.date.text = post.date
-        binding.author.text =  post.authorName
+        binding.author.text = post.authorName
     }
 
 
-
 }
 
-class MainActivityViewModel: ViewModel(){
-    private val _uiState = MutableStateFlow(MainActivity())
-    val uiState: StateFlow<MainActivity> = _uiState
-}

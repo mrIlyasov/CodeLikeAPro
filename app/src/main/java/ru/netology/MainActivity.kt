@@ -3,26 +3,15 @@ package ru.netology
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import ru.netology.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-   /* var post: Post = Post(
-        1,
-        "Нетология. Университет интернет-профессий",
-        "27 октября в 22:19",
-        "Привет, это новая Нетология! Когда-то Нетология начиналась с" +
-                " интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
-                "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                "уверенных профессионалов.Привет, это новая Нетология! Когда-то Нетология начиналась с " +
-                "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
-                "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                "уверенных профессионалов.", 100, 100, 100
-    )*/
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,40 +19,31 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val viewModel: PostViewModel by viewModels()
-
-
-       /* binding.likeButton.setOnClickListener {
-            val currentLikes = post.likes
-            if (!post.likedByMe) {
-                binding.likeButton.setImageResource(R.drawable.liked_icon)
-
-                post = post.copy(likedByMe = true, likes = currentLikes + 1)
-
-            } else {
-                binding.likeButton.setImageResource(R.drawable.heart_icon)
-                post = post.copy(likedByMe = false, likes = currentLikes - 1)
-
-
+        viewModel.data.observe(this) { post ->
+            with(binding) {
+                author.text = post.authorName
+                date.text = post.date
+                content.text = post.content
+                shareCountTextView.text = rounding(post.repostsCount)
+                viewsCountTextView.text = rounding(post.views)
+                likesCountTextView.text = rounding(post.likes)
+                likeButton.setImageResource(if (post.likedByMe) R.drawable.liked_icon else R.drawable.heart_icon)
             }
-            updatePostInfo()
+        }
+
+
+        binding.button.setOnClickListener {
+            viewModel.addLikesRepostsViews()
+        }
+
+        binding.likeButton.setOnClickListener {
+            viewModel.like()
         }
 
         binding.shareButton.setOnClickListener {
-            post = post.copy(repostsCount = post.repostsCount + 1)
-            binding.shareCountTextView.text = rounding(post.repostsCount)
-
+            viewModel.repost()
         }
 
-        binding.button.setOnClickListener {
-            post = post.copy(
-                likes = post.likes + 899,
-                repostsCount = post.repostsCount + 750,
-                views = post.views + 990
-            )
-            updatePostInfo()
-        }
-
-*/
     }
 
 
@@ -94,14 +74,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun updatePostInfo() {
-        binding.content.text = post.content
-        binding.likesCountTextView.text = rounding(post.likes)
-        binding.shareCountTextView.text = rounding(post.repostsCount)
-        binding.viewsCountTextView.text = rounding(post.views)
-        binding.date.text = post.date
-        binding.author.text = post.authorName
-    }
 
 
 }

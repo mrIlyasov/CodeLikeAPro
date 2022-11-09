@@ -14,7 +14,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
                 "уверенных профессионалов.Привет, это новая Нетология! Когда-то Нетология начиналась с " +
                 "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
                 "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                "уверенных профессионалов.", 100, 100, 100
+                "уверенных профессионалов.", 999, 100, 100
     )
     private val data = MutableLiveData(post)
 
@@ -31,4 +31,30 @@ class PostRepositoryInMemoryImpl : PostRepository {
 
         data.value = post
     }
+
+
+    override fun repost() {
+        val currentReposts = post.repostsCount
+        post = post.copy(repostsCount = currentReposts + 10)
+        data.value = post
+    }
+
+    override fun view() {
+        post = post.copy(views = post.views + 1)
+        data.value = post
+    }
+
+
+    override fun addLikesRepostsViews() {
+        val currentLikes = post.likes
+        val currentReposts = post.repostsCount
+        val currentViews = post.views
+        post = post.copy(
+            likes = currentLikes + 899,
+            repostsCount = currentReposts + 990,
+            views = currentViews + 10000
+        )
+        data.value = post
+    }
+
 }

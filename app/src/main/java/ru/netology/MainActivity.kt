@@ -3,65 +3,46 @@ package ru.netology
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import ru.netology.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
-
-    var post: Post = Post(
-        1,
-        "Нетология. Университет интернет-профессий",
-        "27 октября в 22:19",
-        "Привет, это новая Нетология! Когда-то Нетология начиналась с" +
-                " интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
-                "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                "уверенных профессионалов.Привет, это новая Нетология! Когда-то Нетология начиналась с " +
-                "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
-                "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                "уверенных профессионалов.", 100, 100, 100
-    )
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        updatePostInfo(binding)
+        val viewModel: PostViewModel by viewModels()
+        viewModel.data.observe(this) { post ->
+            with(binding) {
+                author.text = post.authorName
+                date.text = post.date
+                content.text = post.content
+                shareCountTextView.text = rounding(post.repostsCount)
+                viewsCountTextView.text = rounding(post.views)
+                likesCountTextView.text = rounding(post.likes)
+                likeButton.setImageResource(if (post.likedByMe) R.drawable.liked_icon else R.drawable.heart_icon)
+            }
+        }
 
+
+        binding.button.setOnClickListener {
+            viewModel.addLikesRepostsViews()
+        }
 
         binding.likeButton.setOnClickListener {
-            if (!post.likedByMe) {
-                binding.likeButton.setImageResource(R.drawable.liked_icon)
-                post.likedByMe = true
-                post.likes += 1
-            } else {
-                binding.likeButton.setImageResource(R.drawable.heart_icon)
-                post.likedByMe = false
-                post.likes -= 1
-
-            }
-            updatePostInfo(binding)
+            viewModel.like()
         }
 
         binding.shareButton.setOnClickListener {
-            post.repostsCount += 1
-            binding.shareCountTextView.text = rounding(post.repostsCount)
-
+            viewModel.repost()
         }
-
-        binding.button.setOnClickListener {
-            post.likes += 899
-            post.repostsCount += 750
-            post.views += 990
-            binding.likesCountTextView.text = rounding(this.post.likes)
-            binding.shareCountTextView.text = rounding(this.post.repostsCount)
-            binding.viewsCountTextView.text = rounding(this.post.views)
-        }
-
 
     }
 
@@ -93,14 +74,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun updatePostInfo(binding: ActivityMainBinding) {
-        binding.content.text = post.content
-        binding.likesCountTextView.text = rounding(post.likes)
-        binding.shareCountTextView.text = rounding(post.repostsCount)
-        binding.viewsCountTextView.text = rounding(post.views)
-        binding.date.text = post.date
-        binding.author.text =  post.authorName
-    }
+
 
 }
 

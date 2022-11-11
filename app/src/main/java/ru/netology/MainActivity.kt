@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val viewModel: PostViewModel by viewModels()
-        viewModel.data.observe(this) { post ->
-            with(binding) {
+        viewModel.data.observe(this) { posts ->
+            with(binding.container) {
                 author.text = post.authorName
                 date.text = post.date
                 content.text = post.content

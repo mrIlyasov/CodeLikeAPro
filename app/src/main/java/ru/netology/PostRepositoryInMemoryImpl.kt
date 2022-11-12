@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class PostRepositoryInMemoryImpl : PostRepository {
-    private val posts = listOf(
+    private var posts = listOf(
         Post(
             1,
-            "Нетология. Университет интернет-профессий",
+            "Нетология1111. Университет интернет-профессий",
             "27 октября в 22:19",
             "Привет, это новая Нетология! Когда-то Нетология начиналась с" +
                     " интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
@@ -15,7 +15,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
                     "уверенных профессионалов.Привет, это новая Нетология! Когда-то Нетология начиналась с " +
                     "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
                     "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                    "уверенных профессионалов.", 999, 100, 100
+                    "уверенных профессионалов.", 5999, 100, 100
         ),
         Post(
             2,
@@ -24,10 +24,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
             "Привет, это новая Нетология! Когда-то Нетология начиналась с" +
                     " интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
                     "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                    "уверенных профессионалов.Привет, это новая Нетология! Когда-то Нетология начиналась с " +
                     "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
                     "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                    "уверенных профессионалов.", 999, 100, 100
+                    "уверенных профессионалов.", 1999, 100, 100
 
         )
     )
@@ -36,8 +35,6 @@ class PostRepositoryInMemoryImpl : PostRepository {
     private val data = MutableLiveData(posts)
 
     override fun getAll(): LiveData<List<Post>> = data
-
-
 
 
     override fun repost(id: Int) {
@@ -59,16 +56,22 @@ class PostRepositoryInMemoryImpl : PostRepository {
 
 
     override fun addLikesRepostsViews(id: Int) {
+
         var post = findPostById(id)
+
+        val newList = posts.toCollection(mutableListOf())
+
         if (post != null) {
             val currentLikes = post.likes
             val currentReposts = post.repostsCount
             val currentViews = post.views
-            post = post.copy(
+            var newPost = post.copy(
                 likes = currentLikes + 899,
                 repostsCount = currentReposts + 990,
                 views = currentViews + 10000
             )
+            newList[0] = newPost
+            posts = newList
         }
         data.value = posts
     }

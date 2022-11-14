@@ -30,20 +30,6 @@ class MainActivity : AppCompatActivity() {
         }
         binding.button.setOnClickListener{viewModel.addLikesRepostsViews(1)}
 
-        /* viewModel.data.observe(this) { posts ->
-             posts.map { post ->
-                 PostCardBinding.inflate(layoutInflater, binding.list, true).apply {
-                     author.text = post.authorName
-                     date.text = post.date
-                     content.text = post.content
-                     shareCountTextView.text = rounding(post.repostsCount)
-                     viewsCountTextView.text = rounding(post.views)
-                     likesCountTextView.text = rounding(post.likes)
-                     likeButton.setImageResource(if (post.likedByMe) R.drawable.liked_icon else R.drawable.heart_icon)
-                     likeButton.setOnClickListener {
-                         viewModel.like(post.id)
-                     }
-                 }.root*/
     }
 }
 

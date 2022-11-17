@@ -18,7 +18,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
                     "уверенных профессионалов.Привет, это новая Нетология! Когда-то Нетология начиналась с " +
                     "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
                     "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                    "уверенных профессионалов.", 5999, 100, 100
+                    "уверенных профессионалов.", 19, 100, 100
         ),
         Post(
             2,
@@ -29,7 +29,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
                     "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
                     "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
                     "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                    "уверенных профессионалов.", 1999, 100, 100
+                    "уверенных профессионалов.", 1999, 1050, 100
 
         ),
         Post(
@@ -53,12 +53,12 @@ class PostRepositoryInMemoryImpl : PostRepository {
 
 
     override fun repost(id: Int) {
-        var post = data.value?.find { it.id == id }
-        if (post != null) {
-            val currentReposts = post.repostsCount
-            post = post.copy(repostsCount = currentReposts + 10)
-            data.value = posts
+        posts = posts.map {
+            if (it.id == id) it.copy(repostsCount = it.repostsCount + 1)
+            else it
         }
+        data.value = posts
+
     }
 
     override fun view(id: Int) {
@@ -72,45 +72,23 @@ class PostRepositoryInMemoryImpl : PostRepository {
 
     override fun addLikesRepostsViews(id: Int) {
 
-        var post = posts.find { it.id == id }
-
-        val newList = mutableListOf<Post>()
-
-
-        if (post != null) {
-            val currentLikes = post.likes
-            val currentReposts = post.repostsCount
-            val currentViews = post.views
-            val newPost = post.copy(
-                1,
-                post.authorName,
-                post.date,
-                post.content,
-                currentLikes + 899,
-                currentReposts + 10000,
-                currentViews + 5000
-            )
-            val newLikes = newPost.likes
-            newList.add(newPost)
-            newList.add(posts[1])
-            newList.add(posts[2])
-            posts = newList
+        posts = posts.map {
+            if (it.id == id) it.copy(
+                likes = it.likes + 1000,
+                repostsCount = it.repostsCount + 200,
+                views = it.views + 10000
+            ) else it
         }
-
-
+        data.value = posts
     }
 
 
     override fun like(id: Int) {
-        var post = data.value?.find { it.id == id }
-        if (post != null) {
-            var currentLikes = post.likes
-            if (!post.likedByMe) {
-                post = post.copy(likedByMe = true, likes = currentLikes + 1)
-
-            } else {
-                post = post.copy(likedByMe = false, likes = currentLikes - 1)
-            }
+        posts = posts.map {
+            if (it.id != id) it else
+                if (it.likedByMe == false) {
+                    it.copy(likedByMe = !it.likedByMe, likes = it.likes + 1)
+                } else it.copy(likedByMe = !it.likedByMe, likes = it.likes - 1)
         }
         data.value = posts
     }

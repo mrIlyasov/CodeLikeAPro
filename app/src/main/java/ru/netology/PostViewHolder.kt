@@ -5,20 +5,28 @@ import ru.netology.databinding.PostCardBinding
 
 class PostViewHolder(
     private val binding: PostCardBinding,
-    private val onlikeListener: OnlikeListener
+    private val onLikeListener: OnLikeListener,
+    private val onRepostListener: OnLikeListener
 
 ) : RecyclerView.ViewHolder(binding.root) {
-
     fun bind(post: Post) {
         binding.apply {
             author.text = post.authorName
             date.text = post.date
             content.text = post.content
             likesCountTextView.text = rounding(post.likes)
-            shareCountTextView.text = rounding(post.repostsCount)
             viewsCountTextView.text = rounding(post.views)
-            likeButton.setOnClickListener { onlikeListener(post) }
-            shareButton.setOnClickListener {  }
+            shareCountTextView.text = rounding(post.repostsCount)
+
+            likeButton.setImageResource(
+                if (post.likedByMe) R.drawable.liked_icon else R.drawable.heart_icon
+            )
+            likeButton.setOnClickListener {
+                onLikeListener(post)
+            }
+            shareButton.setOnClickListener {
+                onRepostListener(post)
+            }
         }
     }
 

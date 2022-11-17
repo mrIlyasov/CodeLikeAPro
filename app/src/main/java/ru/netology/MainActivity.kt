@@ -19,17 +19,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val viewModel: PostViewModel by viewModels()
-        val adapter = PostAdapter {
-        viewModel.like(it.id)
-        }
+        val adapter = PostAdapter({
+            viewModel.like(it.id)
+        }, { viewModel.repost(it.id) })
+
         binding.list.adapter = adapter
-        viewModel.data.observe(this){
-            posts->
+        viewModel.data.observe(this) { posts ->
             adapter.submitList(posts)
         }
-        binding.button.setOnClickListener{viewModel.addLikesRepostsViews(1)}
-
+        binding.button.setOnClickListener {
+            viewModel.addLikesRepostsViews(1)
+        }
     }
 }
 

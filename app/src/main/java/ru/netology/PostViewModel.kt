@@ -9,3 +9,5 @@ class PostViewModel: ViewModel() {
     fun addLikesRepostsViews(id: Int) = repository.addLikesRepostsViews(id)
     fun repost(id: Int) = repository.repost(id)
 }
+
+

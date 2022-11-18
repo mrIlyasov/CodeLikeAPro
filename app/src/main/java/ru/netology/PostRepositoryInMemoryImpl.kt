@@ -1,60 +1,97 @@
 package ru.netology
 
+import android.app.Application
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class PostRepositoryInMemoryImpl : PostRepository {
-    var post: Post = Post(
-        1,
-        "Нетология. Университет интернет-профессий",
-        "27 октября в 22:19",
-        "Привет, это новая Нетология! Когда-то Нетология начиналась с" +
-                " интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
-                "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                "уверенных профессионалов.Привет, это новая Нетология! Когда-то Нетология начиналась с " +
-                "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
-                "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                "уверенных профессионалов.", 999, 100, 100
-    )
-    private val data = MutableLiveData(post)
+    private var posts = listOf(
+        Post(
+            1,
+            "Нетология1111. Университет интернет-профессий",
+            "27 октября в 22:19",
+            "Привет, это новая Нетология! Когда-то Нетология начиналась с" +
+                    " интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
+                    "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
+                    "уверенных профессионалов.Привет, это новая Нетология! Когда-то Нетология начиналась с " +
+                    "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
+                    "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
+                    "уверенных профессионалов.", 19, 100, 100
+        ),
+        Post(
+            2,
+            "Нетология. Университет интернет-профессий",
+            "27 октября в 22:19",
+            "Привет, это новая Нетология! Когда-то Нетология начиналась с" +
+                    " интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
+                    "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
+                    "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
+                    "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
+                    "уверенных профессионалов.", 1999, 1050, 100
 
-    override fun get(): LiveData<Post> = data
+        ),
+        Post(
+            3,
+            "Нетология222. Университет интернет-профессий",
+            "27 октября в 22:19",
+            "Привет, это новая Нетология! Когда-то Нетология начиналась с" +
+                    " интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
+                    "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
+                    "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
+                    "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
+                    "уверенных профессионалов.", 2999, 100, 1000
 
-    override fun like() {
-        val currentLikes = post.likes
-        if (!post.likedByMe) {
-            post = post.copy(likedByMe = true, likes = currentLikes + 1)
-
-        } else {
-            post = post.copy(likedByMe = false, likes = currentLikes - 1)
-        }
-
-        data.value = post
-    }
-
-
-    override fun repost() {
-        val currentReposts = post.repostsCount
-        post = post.copy(repostsCount = currentReposts + 10)
-        data.value = post
-    }
-
-    override fun view() {
-        post = post.copy(views = post.views + 1)
-        data.value = post
-    }
-
-
-    override fun addLikesRepostsViews() {
-        val currentLikes = post.likes
-        val currentReposts = post.repostsCount
-        val currentViews = post.views
-        post = post.copy(
-            likes = currentLikes + 899,
-            repostsCount = currentReposts + 990,
-            views = currentViews + 10000
         )
-        data.value = post
+    )
+
+
+    private val data = MutableLiveData(posts)
+
+    override fun get(): LiveData<List<Post>> = data
+
+
+    override fun repost(id: Int) {
+        posts = posts.map {
+            if (it.id == id) it.copy(repostsCount = it.repostsCount + 1)
+            else it
+        }
+        data.value = posts
+
     }
+
+    override fun view(id: Int) {
+        var post = data.value?.find { it.id == id }
+        if (post != null) {
+            post = post.copy(views = post.views + 1)
+        }
+        data.value = posts
+    }
+
+
+    override fun addLikesRepostsViews(id: Int) {
+
+        posts = posts.map {
+            if (it.id == id) it.copy(
+                likes = it.likes + 1000,
+                repostsCount = it.repostsCount + 200,
+                views = it.views + 10000
+            ) else it
+        }
+        data.value = posts
+    }
+
+
+    override fun like(id: Int) {
+        posts = posts.map {
+            if (it.id != id) it else
+                if (it.likedByMe == false) {
+                    it.copy(likedByMe = !it.likedByMe, likes = it.likes + 1)
+                } else it.copy(likedByMe = !it.likedByMe, likes = it.likes - 1)
+        }
+        data.value = posts
+    }
+
 
 }

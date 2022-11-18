@@ -6,7 +6,8 @@ import ru.netology.databinding.PostCardBinding
 class PostViewHolder(
     private val binding: PostCardBinding,
     private val onLikeListener: OnLikeListener,
-    private val onRepostListener: OnLikeListener
+    private val onRepostListener: OnRepostListener,
+    private val onRemoveListener: OnRemoveListener,
 
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {

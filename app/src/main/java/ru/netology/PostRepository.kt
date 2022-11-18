@@ -7,5 +7,8 @@ interface PostRepository {
     fun like(id: Int)
     fun repost(id: Int)
     fun view(id: Int)
+    fun removeById(id:Int)
+
     fun addLikesRepostsViews(id: Int)
+
 }

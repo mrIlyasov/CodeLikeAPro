@@ -3,6 +3,8 @@
     <string name="app_name">НМедиа</string>
     <string name="textForTextView">НМедиа</string>
     <string name="textForButton">БУТТОН</string>
+    <string name="remove">Удалить </string>
+    <string name="edit">Редактировать </string>
     <string name="author">Нетология. Университет интернет-профессий</string>
     <string name="date">27 октября в 22:19</string>
     <string name="content">Привет, это новая Нетология! Когда-то Нетология начиналась с интенсива

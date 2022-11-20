@@ -1,5 +1,7 @@
 package ru.netology
 
+import android.view.View
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.databinding.PostCardBinding
 
@@ -8,10 +10,12 @@ class PostViewHolder(
     private val onLikeListener: OnLikeListener,
     private val onRepostListener: OnRepostListener,
     private val onRemoveListener: OnRemoveListener,
+    private val onEditListener: OnEditListener,
 
-) : RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         binding.apply {
+            editContent.visibility = View.GONE
             author.text = post.authorName
             date.text = post.date
             content.text = post.content
@@ -27,6 +31,28 @@ class PostViewHolder(
             }
             shareButton.setOnClickListener {
                 onRepostListener(post)
+            }
+            viewsButton.setOnClickListener {
+                onRemoveListener(post)
+            }
+            menuButton.setOnClickListener {
+                PopupMenu(it.context, it).apply {
+                    inflate(R.menu.post_menu)
+                    setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.remove -> {
+                                onRemoveListener(post)
+                                true
+                            }
+                            R.id.edit -> {
+                                onEditListener(post)
+                                true
+                            }
+
+                            else -> false
+                        }
+                    }
+                }.show()
             }
         }
     }

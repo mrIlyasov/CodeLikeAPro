@@ -97,5 +97,15 @@ class PostRepositoryInMemoryImpl : PostRepository {
         posts = posts.filter { it.id != id }
         data.value = posts
     }
+
+    override fun edit(id: Int) {
+        posts = posts.map {
+            if (it.id == id) it.copy(
+                content = "new content"
+            ) else it
+        }
+        data.value = posts
+
+    }
 }
 

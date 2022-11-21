@@ -15,7 +15,6 @@ class PostViewHolder(
     ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         binding.apply {
-            editContent.visibility = View.GONE
             author.text = post.authorName
             date.text = post.date
             content.text = post.content

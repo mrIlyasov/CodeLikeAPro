@@ -7,10 +7,7 @@ import ru.netology.databinding.PostCardBinding
 
 class PostViewHolder(
     private val binding: PostCardBinding,
-    private val onLikeListener: OnLikeListener,
-    private val onRepostListener: OnRepostListener,
-    private val onRemoveListener: OnRemoveListener,
-    private val onEditListener: OnEditListener,
+    private val onInteractionListener: OnInteractionListener
 
     ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
@@ -26,13 +23,13 @@ class PostViewHolder(
                 if (post.likedByMe) R.drawable.liked_icon else R.drawable.heart_icon
             )
             likeButton.setOnClickListener {
-                onLikeListener(post)
+               onInteractionListener.onLike(post)
             }
             shareButton.setOnClickListener {
-                onRepostListener(post)
+                onInteractionListener.onRepost(post)
             }
             viewsButton.setOnClickListener {
-                onRemoveListener(post)
+                onInteractionListener.onView(post)
             }
             menuButton.setOnClickListener {
                 PopupMenu(it.context, it).apply {
@@ -40,11 +37,11 @@ class PostViewHolder(
                     setOnMenuItemClickListener { item ->
                         when (item.itemId) {
                             R.id.remove -> {
-                                onRemoveListener(post)
+                                onInteractionListener.onRemove(post)
                                 true
                             }
                             R.id.edit -> {
-                                onEditListener(post)
+                                onInteractionListener.onEdit(post)
                                 true
                             }
 

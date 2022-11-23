@@ -12,6 +12,7 @@ typealias OnRemoveListener = (post: Post) -> Unit
 typealias OnEditListener = (post: Post) -> Unit
 
 
+
 class PostAdapter(
     private val onLikeListener: OnLikeListener,
     private val onRepostListener: OnRepostListener,

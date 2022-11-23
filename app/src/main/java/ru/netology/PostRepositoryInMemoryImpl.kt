@@ -50,7 +50,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
     private val data = MutableLiveData(posts)
 
     override fun get(): LiveData<List<Post>> = data
-
+    override fun getSize(): Int {
+        return posts.size
+    }
 
     override fun repost(id: Int) {
         posts = posts.map {
@@ -98,14 +100,25 @@ class PostRepositoryInMemoryImpl : PostRepository {
         data.value = posts
     }
 
-    override fun edit(id: Int) {
+    override fun edit(id: Int, newContent: String) {
         posts = posts.map {
             if (it.id == id) it.copy(
-                content = "new content"
+                content = newContent
             ) else it
         }
         data.value = posts
 
     }
+
+    override fun addPost(newContent: String) {
+        var lastPost = posts[posts.size - 1]
+        var idOfLastPost = posts[posts.size - 1].id
+        var newPosts = mutableListOf<Post>()
+        newPosts.addAll(posts)
+        newPosts.add(lastPost.copy(id = idOfLastPost + 1, content = newContent))
+        posts = newPosts
+        data.value = posts
+    }
+
 }
 

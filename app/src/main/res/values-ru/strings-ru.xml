@@ -16,4 +16,6 @@
     <string name="likesCount">10</string>
     <string name="shareCount">5</string>
     <string name="viewsCount">30</string>
+    <string name="post_text">Введите текст записи</string>
+    <string name="error_empty_content">Текстовое поле не может быть пустым</string>
 </resources>

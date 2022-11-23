@@ -5,11 +5,13 @@ import androidx.lifecycle.ViewModel
 class PostViewModel: ViewModel() {
     private val repository: PostRepository = PostRepositoryInMemoryImpl()
     val data = repository.get()
+    fun getSizeOfPosts(): Int = repository.getSize()
     fun like(id: Int) = repository.like(id)
     fun addLikesRepostsViews(id: Int) = repository.addLikesRepostsViews(id)
     fun repost(id: Int) = repository.repost(id)
     fun removeById(id: Int) = repository.removeById(id);
-    fun edit(id: Int) = repository.edit(id);
+    fun edit(id: Int, newContent: String) = repository.edit(id, newContent);
+    fun addPost(newContent: String) = repository.addPost(newContent);
 }
 
 

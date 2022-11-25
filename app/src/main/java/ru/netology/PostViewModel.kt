@@ -2,7 +2,7 @@ package ru.netology
 
 import androidx.lifecycle.ViewModel
 
-class PostViewModel: ViewModel() {
+class PostViewModel : ViewModel() {
     private val repository: PostRepository = PostRepositoryInMemoryImpl()
     val data = repository.get()
     fun getSizeOfPosts(): Int = repository.getSize()

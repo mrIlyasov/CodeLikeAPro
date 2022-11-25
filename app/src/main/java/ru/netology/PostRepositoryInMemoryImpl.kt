@@ -7,11 +7,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class PostRepositoryInMemoryImpl : PostRepository {
+    var nextId = 1
     private var posts = listOf(
         Post(
-            1,
-            "Нетология1111. Университет интернет-профессий",
-            "27 октября в 22:19",
+            nextId++,
+            "Нетология. Университет интернет-профессий",
+            "27 октября в 22:19 " + nextId,
             "Привет, это новая Нетология! Когда-то Нетология начиналась с" +
                     " интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
                     "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
@@ -21,9 +22,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
                     "уверенных профессионалов.", 19, 100, 100
         ),
         Post(
-            2,
+            nextId++,
             "Нетология. Университет интернет-профессий",
-            "27 октября в 22:19",
+            "27 октября в 22:19 $nextId",
             "Привет, это новая Нетология! Когда-то Нетология начиналась с" +
                     " интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
                     "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
@@ -33,9 +34,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
 
         ),
         Post(
-            3,
-            "Нетология222. Университет интернет-профессий",
-            "27 октября в 22:19",
+            nextId++,
+            "Нетология. Университет интернет-профессий",
+            "27 октября в 22:19 $nextId",
             "Привет, это новая Нетология! Когда-то Нетология начиналась с" +
                     " интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
                     "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
@@ -64,10 +65,12 @@ class PostRepositoryInMemoryImpl : PostRepository {
     }
 
     override fun view(id: Int) {
-        var post = data.value?.find { it.id == id }
-        if (post != null) {
-            post = post.copy(views = post.views + 1)
+
+        posts = posts.map {
+            if (it.id == id) it.copy(views = it.views + 1)
+            else it
         }
+
         data.value = posts
     }
 
@@ -110,15 +113,29 @@ class PostRepositoryInMemoryImpl : PostRepository {
 
     }
 
-    override fun addPost(newContent: String) {
-        var lastPost = posts[posts.size - 1]
-        var idOfLastPost = posts[posts.size - 1].id
+    override fun savePost(post: Post) {
+
         var newPosts = mutableListOf<Post>()
-        newPosts.addAll(posts)
-        newPosts.add(lastPost.copy(id = idOfLastPost + 1, content = newContent))
+        if (posts.find { it.id == post.id } == null) {
+            newPosts.addAll(posts)
+            newPosts.add(
+                post.copy(
+                    nextId++,
+                    authorName = "Me",
+                    likedByMe = false,
+                    date = "now"
+                )
+            )
+        } else
+            newPosts = posts.map {
+                if (it.id == post.id) it.copy(content = post.content) else it
+            }.toMutableList()
         posts = newPosts
         data.value = posts
     }
-
 }
+
+
+
+
 

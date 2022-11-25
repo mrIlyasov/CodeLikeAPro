@@ -1,7 +1,10 @@
 package ru.netology
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -16,7 +19,8 @@ import ru.netology.databinding.PostCardBinding
 
 class MainActivity : AppCompatActivity() {
     val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-
+    val defaultPost = Post(content = " ");
+    var post = Post(content = " ");
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -27,7 +31,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onEdit(post: Post) {
-                viewModel.edit(post.id, binding.editContent.text.toString())
+                binding.editContent.requestFocus()
+                binding.editContent.setText(post.content)
+                this@MainActivity.post = post.copy(content = post.content)
+
+                AndroidUtils.showKeyBoard(binding.editContent)
+
             }
 
             override fun onRemove(post: Post) {
@@ -47,37 +56,52 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    binding.list.adapter = adapter
-    viewModel.data.observe(this)
-    {
-        posts ->
-        adapter.submitList(posts)
-    }
-    binding.button.setOnClickListener()
-    {
-        viewModel.addLikesRepostsViews(1)
-    }
+        binding.list.adapter = adapter
+        viewModel.data.observe(this)
+        { posts ->
+            adapter.submitList(posts)
+        }
+        binding.button.setOnClickListener()
+        {
+            viewModel.addLikesRepostsViews(1)
+        }
 
-    binding.saveButton.setOnClickListener()
-    {
-        with(binding.editContent) {
-            if (text.isNullOrBlank()) {
-                Toast.makeText(
-                    this@MainActivity,
-                    this@MainActivity.getString(R.string.error_empty_content),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                viewModel.addPost(binding.editContent.text.toString())
-                binding.editContent.text.clear()
-                binding.list.smoothScrollToPosition(viewModel.getSizeOfPosts() - 1)
-                clearFocus()
-                AndroidUtils.hideKeyBoard(this)
+        binding.saveButton.setOnClickListener()
+        {
+            with(binding.editContent) {
+                if (text.isNullOrBlank()) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        this@MainActivity.getString(R.string.error_empty_content),
+                        Toast.LENGTH_SHORT
+                    ).show()
 
+                } else {
+                    if (post.id == 0)
+                        viewModel.savePost(post.copy(content = binding.editContent.text.toString()))
+                    else {
+                        viewModel.savePost(post.copy(content = binding.editContent.text.toString()))
+                    }
+                    binding.editContent.text.clear()
+                    binding.editContent.clearFocus()
+                    binding.editContent.showSoftInputOnFocus
+                    binding.list.smoothScrollToPosition(
+                        if (viewModel.getSizeOfPosts() > 0) {
+                            viewModel.getSizeOfPosts() - 1
+                        } else {
+                            0
+                        }
+                    )
+
+
+
+
+                }
+                AndroidUtils.hideKeyBoard(binding.editContent)
+                this@MainActivity.post=defaultPost
             }
         }
     }
-}
 }
 
 

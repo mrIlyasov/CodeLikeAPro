@@ -15,5 +15,5 @@
     <string name="shareCount">5</string>
     <string name="viewsCount">30</string>
     <string name="post_text">Input text of post</string>
-    <string name="error_empty_content">Contenc can`t be emty</string>
+    <string name="error_empty_content">Content can`t be emty</string>
 </resources>

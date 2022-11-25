@@ -10,7 +10,7 @@ interface PostRepository {
     fun view(id: Int)
     fun removeById(id: Int)
     fun edit(id: Int, newContent: String)
-    fun addPost(newContent: String)
+    fun savePost(post: Post)
     fun addLikesRepostsViews(id: Int)
 
 }

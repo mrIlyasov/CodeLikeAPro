@@ -3,6 +3,7 @@ package ru.netology
 import android.view.View
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import ru.netology.databinding.ActivityMainBinding
 import ru.netology.databinding.PostCardBinding
 
 class PostViewHolder(
@@ -31,6 +32,7 @@ class PostViewHolder(
             viewsButton.setOnClickListener {
                 onInteractionListener.onView(post)
             }
+
             menuButton.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.post_menu)
@@ -41,6 +43,7 @@ class PostViewHolder(
                                 true
                             }
                             R.id.edit -> {
+
                                 onInteractionListener.onEdit(post)
                                 true
                             }

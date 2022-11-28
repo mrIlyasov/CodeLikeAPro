@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        binding.group.visibility = View.GONE
         val viewModel: PostViewModel by viewModels()
         val adapter = PostAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
@@ -31,8 +32,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onEdit(post: Post) {
+                binding.group.visibility = View.VISIBLE
                 binding.editContent.requestFocus()
                 binding.editContent.setText(post.content)
+                binding.editTextView.setText(post.content)
                 this@MainActivity.post = post.copy(content = post.content)
 
                 AndroidUtils.showKeyBoard(binding.editContent)
@@ -52,8 +55,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-
-
 
 
         binding.list.adapter = adapter
@@ -93,13 +94,18 @@ class MainActivity : AppCompatActivity() {
                         }
                     )
 
-
-
-
                 }
                 AndroidUtils.hideKeyBoard(binding.editContent)
-                this@MainActivity.post=defaultPost
+                binding.group.visibility = View.GONE
+                this@MainActivity.post = defaultPost
             }
+        }
+        binding.cancelButton.setOnClickListener {
+            binding.editContent.clearFocus()
+            binding.editTextView.setText("")
+            binding.group.visibility = View.GONE
+            AndroidUtils.hideKeyBoard(binding.editContent)
+            binding.editContent.setText("")
         }
     }
 }

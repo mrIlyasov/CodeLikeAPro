@@ -81,7 +81,15 @@ class MainActivity : AppCompatActivity() {
                     if (post.id == 0)
                         viewModel.savePost(post.copy(content = binding.editContent.text.toString()))
                     else {
-                        viewModel.savePost(post.copy(content = binding.editContent.text.toString()))
+                        if (post.id > 0 && viewModel.findPost(post.id) == null){
+                            Toast.makeText(
+                                this@MainActivity,
+                                this@MainActivity.getString(R.string.error_post_not_found),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        else
+                            viewModel.savePost(post.copy(content = binding.editContent.text.toString()))
                     }
                     binding.editContent.text.clear()
                     binding.editContent.clearFocus()

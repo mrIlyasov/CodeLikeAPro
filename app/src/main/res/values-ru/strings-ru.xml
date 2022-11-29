@@ -18,4 +18,5 @@
     <string name="viewsCount">30</string>
     <string name="post_text">Введите текст записи</string>
     <string name="error_empty_content">Текстовое поле не может быть пустым</string>
+    <string name="error_post_not_found">Пост не найден</string>
 </resources>

@@ -13,6 +13,7 @@ class PostViewModel : ViewModel() {
     fun removeById(id: Int) = repository.removeById(id);
     fun edit(id: Int, newContent: String) = repository.edit(id, newContent);
     fun savePost(post: Post) = repository.savePost(post);
+    fun findPost(id: Int): Post? = repository.findPost(id)
 
 }
 

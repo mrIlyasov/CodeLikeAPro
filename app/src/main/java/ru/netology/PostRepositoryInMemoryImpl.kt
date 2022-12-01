@@ -114,7 +114,6 @@ class PostRepositoryInMemoryImpl : PostRepository {
     }
 
     override fun savePost(post: Post) {
-
         var newPosts = mutableListOf<Post>()
         if (posts.find { it.id == post.id } == null) {
             newPosts.addAll(posts)

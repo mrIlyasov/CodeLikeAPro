@@ -19,8 +19,7 @@ import ru.netology.databinding.PostCardBinding
 
 class MainActivity : AppCompatActivity() {
     val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    val defaultPost = Post(content = " ");
-    var post = Post(content = " ");
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -30,14 +29,13 @@ class MainActivity : AppCompatActivity() {
             override fun onLike(post: Post) {
                 viewModel.like(post.id)
             }
-
             override fun onEdit(post: Post) {
                 binding.group.visibility = View.VISIBLE
                 binding.editContent.requestFocus()
                 binding.editContent.setText(post.content)
                 binding.editTextView.setText(post.content)
-                this@MainActivity.post = post.copy(content = post.content)
 
+                viewModel.edit(post)
                 AndroidUtils.showKeyBoard(binding.editContent)
 
             }
@@ -67,6 +65,17 @@ class MainActivity : AppCompatActivity() {
             viewModel.addLikesRepostsViews(1)
         }
 
+        viewModel.edited.observe(this) { post ->
+            if (post.id == 0) {
+                return@observe
+            }
+
+
+            with(binding.editContent) {
+                requestFocus()
+                setText(post.content)
+            }
+        }
         binding.saveButton.setOnClickListener()
         {
             with(binding.editContent) {
@@ -78,18 +87,10 @@ class MainActivity : AppCompatActivity() {
                     ).show()
 
                 } else {
-                    if (post.id == 0)
-                        viewModel.savePost(post.copy(content = binding.editContent.text.toString()))
-                    else {
-                        if (post.id > 0 && viewModel.findPost(post.id) == null){
-                            Toast.makeText(
-                                this@MainActivity,
-                                this@MainActivity.getString(R.string.error_post_not_found),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        else
-                            viewModel.savePost(post.copy(content = binding.editContent.text.toString()))
+
+                            viewModel.changeContent(text.toString())
+                        viewModel.save()
+
                     }
                     binding.editContent.text.clear()
                     binding.editContent.clearFocus()
@@ -105,9 +106,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 AndroidUtils.hideKeyBoard(binding.editContent)
                 binding.group.visibility = View.GONE
-                this@MainActivity.post = defaultPost
+
             }
-        }
+
         binding.cancelButton.setOnClickListener {
             binding.editContent.clearFocus()
             binding.editTextView.setText("")

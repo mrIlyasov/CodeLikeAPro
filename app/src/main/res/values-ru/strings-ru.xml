@@ -3,6 +3,8 @@
     <string name="app_name">НМедиа</string>
     <string name="textForTextView">НМедиа</string>
     <string name="textForButton">БУТТОН</string>
+    <string name="remove">Удалить </string>
+    <string name="edit">Редактировать </string>
     <string name="author">Нетология. Университет интернет-профессий</string>
     <string name="date">27 октября в 22:19</string>
     <string name="content">Привет, это новая Нетология! Когда-то Нетология начиналась с интенсива
@@ -14,4 +16,7 @@
     <string name="likesCount">10</string>
     <string name="shareCount">5</string>
     <string name="viewsCount">30</string>
+    <string name="post_text">Введите текст записи</string>
+    <string name="error_empty_content">Текстовое поле не может быть пустым</string>
+    <string name="error_post_not_found">Пост не найден</string>
 </resources>

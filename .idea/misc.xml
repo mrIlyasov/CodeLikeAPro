@@ -14,8 +14,9 @@
         <entry key="..\:/AndroidProjects/AndroidHomeWorks/code2/app/src/main/res/drawable/liked_icon.xml" value="0.169" />
         <entry key="..\:/AndroidProjects/AndroidHomeWorks/code2/app/src/main/res/drawable/more_icon.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/AndroidHomeWorks/code2/app/src/main/res/drawable/share_icon.xml" value="0.169" />
-        <entry key="..\:/AndroidProjects/AndroidHomeWorks/code2/app/src/main/res/layout/activity_main.xml" value="0.176" />
-        <entry key="..\:/AndroidProjects/AndroidHomeWorks/code2/app/src/main/res/layout/post_card.xml" value="0.20863616930312098" />
+        <entry key="..\:/AndroidProjects/AndroidHomeWorks/code2/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/AndroidProjects/AndroidHomeWorks/code2/app/src/main/res/layout/post_card.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/AndroidHomeWorks/code2/app/src/main/res/menu/post_menu.xml" value="0.2" />
         <entry key="..\:/AndroidProjects/AndroidHomeWorks/code2/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2265" />
       </map>
     </option>

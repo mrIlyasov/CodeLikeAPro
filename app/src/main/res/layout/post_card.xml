@@ -29,7 +29,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/date"
-        app:layout_constraintEnd_toStartOf="@id/more_button"
+        app:layout_constraintEnd_toStartOf="@id/menuButton"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toTopOf="@id/avatar"
         app:layout_constraintVertical_chainStyle="packed" />
@@ -45,7 +45,7 @@
 
 
     <ImageButton
-        android:id="@+id/more_button"
+        android:id="@+id/menuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="date,author,avatar,more_button"
+        app:constraint_referenced_ids="date,author,avatar,menuButton"
         tools:layout_editor_absoluteY="64dp" />
 
     <TextView
@@ -69,10 +69,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/avatar"
-        app:layout_constraintTop_toBottomOf="@id/barrier" />
+        app:layout_constraintTop_toBottomOf="@id/barrier"
+        tools:text="@string/content" />
 
     <ImageButton
         android:id="@+id/like_button"
@@ -137,7 +138,6 @@
         app:layout_constraintTop_toTopOf="@id/like_button" />
 
 
-
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/socialButtonsBarrier"
         android:layout_width="wrap_content"
@@ -147,6 +147,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/content" />
+
+   <!-- <EditText
+        android:id="@+id/editContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/like_button" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

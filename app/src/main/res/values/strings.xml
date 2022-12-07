@@ -2,6 +2,8 @@
     <string name="app_name">Nmedia</string>
     <string name="textForTextView">Nmedia</string>
     <string name="textForButton">BUTTON</string>
+    <string name="remove">Remove </string>
+    <string name="edit">Edit </string>
     <string name="author">Нетология. Университет интернет-профессий</string>
     <string name="date">Oct 27 at 22:19</string>
     <string name="content">Привет, это новая Нетология! Когда-то Нетология начиналась с интенсива
@@ -12,4 +14,7 @@
     <string name="likesCount">10</string>
     <string name="shareCount">5</string>
     <string name="viewsCount">30</string>
+    <string name="post_text">Input text of post</string>
+    <string name="error_empty_content">Content can`t be emty</string>
+    <string name="error_post_not_found">Post not found</string>
 </resources>

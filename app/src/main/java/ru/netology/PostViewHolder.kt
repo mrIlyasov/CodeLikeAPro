@@ -17,10 +17,8 @@ class PostViewHolder(
             date.text = post.date
             content.text = post.content
             likeButton.text=rounding(post.likes)
-
             viewsCountTextView.text = rounding(post.views)
             shareButton.text = rounding(post.repostsCount)
-
             likeButton.isChecked=post.likedByMe
 
 

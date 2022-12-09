@@ -1,6 +1,7 @@
 package ru.netology
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
             override fun onLike(post: Post) {
                 viewModel.like(post.id)
             }
+
             override fun onEdit(post: Post) {
                 binding.group.visibility = View.VISIBLE
                 binding.editContent.requestFocus()
@@ -45,7 +47,19 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onRepost(post: Post) {
+                val intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, post.content)
+                    type = "text/plain"
+                }
+                /*val shareIntent = Intent().apply {
+                    action = Intent.ACTION_MEDIA_SHARED
+                    putExtra(Intent.EXTRA_INTENT, intent)
+                }*/
+                val shareIntent=Intent.createChooser(intent, post.content)
+                startActivity(shareIntent)
                 viewModel.repost(post.id)
+
             }
 
             override fun onView(post: Post) {
@@ -56,12 +70,10 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.list.adapter = adapter
-        viewModel.data.observe(this)
-        { posts ->
+        viewModel.data.observe(this) { posts ->
             adapter.submitList(posts)
         }
-        binding.button.setOnClickListener()
-        {
+        binding.button.setOnClickListener() {
             viewModel.addLikesRepostsViews(1)
         }
 
@@ -76,8 +88,7 @@ class MainActivity : AppCompatActivity() {
                 setText(post.content)
             }
         }
-        binding.saveButton.setOnClickListener()
-        {
+        binding.saveButton.setOnClickListener() {
             with(binding.editContent) {
                 if (text.isNullOrBlank()) {
                     Toast.makeText(
@@ -88,26 +99,26 @@ class MainActivity : AppCompatActivity() {
 
                 } else {
 
-                            viewModel.changeContent(text.toString())
-                        viewModel.save()
-
-                    }
-                    binding.editContent.text.clear()
-                    binding.editContent.clearFocus()
-                    binding.editContent.showSoftInputOnFocus
-                    binding.list.smoothScrollToPosition(
-                        if (viewModel.getSizeOfPosts() > 0) {
-                            viewModel.getSizeOfPosts() - 1
-                        } else {
-                            0
-                        }
-                    )
+                    viewModel.changeContent(text.toString())
+                    viewModel.save()
 
                 }
-                AndroidUtils.hideKeyBoard(binding.editContent)
-                binding.group.visibility = View.GONE
+                binding.editContent.text.clear()
+                binding.editContent.clearFocus()
+                binding.editContent.showSoftInputOnFocus
+                binding.list.smoothScrollToPosition(
+                    if (viewModel.getSizeOfPosts() > 0) {
+                        viewModel.getSizeOfPosts() - 1
+                    } else {
+                        0
+                    }
+                )
 
             }
+            AndroidUtils.hideKeyBoard(binding.editContent)
+            binding.group.visibility = View.GONE
+
+        }
 
         binding.cancelButton.setOnClickListener {
             binding.editContent.clearFocus()

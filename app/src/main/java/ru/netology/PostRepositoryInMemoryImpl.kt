@@ -2,6 +2,7 @@ package ru.netology
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -56,11 +57,14 @@ class PostRepositoryInMemoryImpl : PostRepository {
     }
 
     override fun repost(id: Int) {
+
         posts = posts.map {
-            if (it.id == id) it.copy(repostsCount = it.repostsCount + 1)
+            if (it.id == id)
+                it.copy(repostsCount = it.repostsCount + 1)
             else it
         }
         data.value = posts
+
 
     }
 

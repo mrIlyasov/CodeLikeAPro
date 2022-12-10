@@ -44,17 +44,16 @@
         app:layout_constraintTop_toBottomOf="@+id/author" />
 
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/menuButton"
-        android:layout_width="wrap_content"
+        style="@style/Widget.App.Button.OutlinedButton.MoreButton"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="#FFFFFF"
+        app:icon="@drawable/more_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/author"
         app:layout_constraintTop_toBottomOf="@id/avatar"
-        app:layout_constraintTop_toTopOf="@id/avatar"
-        app:srcCompat="@drawable/more_icon" />
+        app:layout_constraintTop_toTopOf="@id/avatar" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
@@ -75,44 +74,28 @@
         app:layout_constraintTop_toBottomOf="@id/barrier"
         tools:text="@string/content" />
 
-    <ImageButton
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/like_button"
+        style="@style/Widget.AppTheme.LikeCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="#FFFFFF"
+        app:icon="@drawable/like"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/content"
-        app:srcCompat="@drawable/heart_icon" />
+        app:layout_constraintTop_toBottomOf="@id/content" />
 
 
-    <TextView
-        android:id="@+id/likesCountTextView"
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/share_button"
+        style="@style/Widget.AppTheme.PostButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_margin="16dp"
+        app:icon="@drawable/share_icon"
         app:layout_constraintBottom_toBottomOf="@id/like_button"
         app:layout_constraintStart_toEndOf="@id/like_button"
-        app:layout_constraintTop_toTopOf="@id/like_button" />
-
-    <ImageButton
-        android:id="@+id/share_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:backgroundTint="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@id/like_button"
-        app:layout_constraintStart_toEndOf="@id/likesCountTextView"
-        app:layout_constraintTop_toTopOf="@id/like_button"
-        app:srcCompat="@drawable/share_icon" />
-
-    <TextView
-        android:id="@+id/shareCountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/shareCount"
-        app:layout_constraintBottom_toBottomOf="@id/like_button"
-        app:layout_constraintStart_toEndOf="@id/share_button"
         app:layout_constraintTop_toTopOf="@id/like_button" />
 
     <ImageButton
@@ -143,21 +126,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="viewsCountTextView, shareCountTextView,share_button,likesCountTextView,like_button,views_button"
+        app:constraint_referenced_ids="viewsCountTextView,share_button,like_button,views_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/content" />
-
-   <!-- <EditText
-        android:id="@+id/editContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/like_button" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

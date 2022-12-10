@@ -16,13 +16,17 @@ class PostViewHolder(
             author.text = post.authorName
             date.text = post.date
             content.text = post.content
-            likesCountTextView.text = rounding(post.likes)
-            viewsCountTextView.text = rounding(post.views)
-            shareCountTextView.text = rounding(post.repostsCount)
+            likeButton.text=rounding(post.likes)
 
-            likeButton.setImageResource(
-                if (post.likedByMe) R.drawable.liked_icon else R.drawable.heart_icon
-            )
+            viewsCountTextView.text = rounding(post.views)
+            shareButton.text = rounding(post.repostsCount)
+
+            likeButton.isChecked=post.likedByMe
+
+
+            likeButton.setOnClickListener{
+                onInteractionListener.onLike(post)
+            }
             likeButton.setOnClickListener {
                onInteractionListener.onLike(post)
             }

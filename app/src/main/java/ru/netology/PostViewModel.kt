@@ -20,6 +20,7 @@ class PostViewModel : ViewModel() {
     fun addLikesRepostsViews(id: Int) = repository.addLikesRepostsViews(id)
     fun repost(id: Int) = repository.repost(id)
     fun removeById(id: Int) = repository.removeById(id);
+    fun findIndexOfPostById(id: Int):Int = repository.findIndexOfPostById(id)
 
     fun savePost(post: Post) = repository.savePost(post);
     fun findPost(id: Int): Post? = repository.findPost(id)
@@ -38,6 +39,11 @@ class PostViewModel : ViewModel() {
 
     fun edit(post: Post) {
         edited.value = post
+    }
+
+    fun getIdOfEdited():Int{
+        return edited.value!!.id
+
     }
 
 }

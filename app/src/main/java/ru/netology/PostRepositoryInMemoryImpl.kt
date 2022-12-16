@@ -129,17 +129,23 @@ class PostRepositoryInMemoryImpl : PostRepository {
                     date = "now"
                 )
             )
+
         } else
             newPosts = posts.map {
                 if (it.id == post.id) it.copy(content = post.content) else it
             }.toMutableList()
         posts = newPosts
         data.value = posts
+
     }
 
     override fun findPost(id: Int): Post? {
         return posts.find { it.id == id }
 
+    }
+
+    override fun findIndexOfPostById(id: Int): Int {
+       return posts.indexOf(posts.find { it.id==id })
     }
 }
 

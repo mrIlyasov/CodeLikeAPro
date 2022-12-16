@@ -12,6 +12,7 @@ interface PostRepository {
     fun edit(id: Int, newContent: String)
     fun savePost(post: Post)
     fun addLikesRepostsViews(id: Int)
+    fun findIndexOfPostById(id:Int): Int
     fun findPost(id: Int): Post?
 
 }

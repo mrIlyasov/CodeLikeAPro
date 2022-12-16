@@ -52,10 +52,7 @@ class MainActivity : AppCompatActivity() {
                     putExtra(Intent.EXTRA_TEXT, post.content)
                     type = "text/plain"
                 }
-                /*val shareIntent = Intent().apply {
-                    action = Intent.ACTION_MEDIA_SHARED
-                    putExtra(Intent.EXTRA_INTENT, intent)
-                }*/
+
                 val shareIntent=Intent.createChooser(intent, post.content)
                 startActivity(shareIntent)
                 viewModel.repost(post.id)
@@ -89,6 +86,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         binding.saveButton.setOnClickListener() {
+            val idOfEdited = viewModel.edited.value!!.id
             with(binding.editContent) {
                 if (text.isNullOrBlank()) {
                     Toast.makeText(
@@ -100,6 +98,7 @@ class MainActivity : AppCompatActivity() {
                 } else {
 
                     viewModel.changeContent(text.toString())
+
                     viewModel.save()
 
                 }
@@ -107,11 +106,11 @@ class MainActivity : AppCompatActivity() {
                 binding.editContent.clearFocus()
                 binding.editContent.showSoftInputOnFocus
                 binding.list.smoothScrollToPosition(
-                    if (viewModel.getSizeOfPosts() > 0) {
-                        viewModel.getSizeOfPosts() - 1
+                    (if (viewModel.getSizeOfPosts() > 0) {
+                        viewModel.findIndexOfPostById(idOfEdited)
                     } else {
                         0
-                    }
+                    })
                 )
 
             }

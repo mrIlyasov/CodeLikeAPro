@@ -1,11 +1,8 @@
-package ru.netology
+package ru.netology.repository
 
-import android.app.Application
-import android.content.Context
-import android.content.Intent
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import ru.netology.dataClasses.Post
 
 class PostRepositoryInMemoryImpl : PostRepository {
     var nextId = 1

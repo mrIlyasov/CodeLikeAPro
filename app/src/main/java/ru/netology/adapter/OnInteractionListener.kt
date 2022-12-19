@@ -1,4 +1,6 @@
-package ru.netology
+package ru.netology.adapter
+
+import ru.netology.dataClasses.Post
 
 typealias OnInteracionLitener = (post: Post) -> Unit
 

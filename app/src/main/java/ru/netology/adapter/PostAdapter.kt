@@ -1,10 +1,9 @@
-package ru.netology
+package ru.netology.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import ru.netology.databinding.ActivityMainBinding
+import ru.netology.dataClasses.Post
 import ru.netology.databinding.PostCardBinding
 
 

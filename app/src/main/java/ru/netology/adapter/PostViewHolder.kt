@@ -1,9 +1,9 @@
-package ru.netology
+package ru.netology.adapter
 
-import android.view.View
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import ru.netology.databinding.ActivityMainBinding
+import ru.netology.dataClasses.Post
+import ru.netology.R
 import ru.netology.databinding.PostCardBinding
 
 class PostViewHolder(

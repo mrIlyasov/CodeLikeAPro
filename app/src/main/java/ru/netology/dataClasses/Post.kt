@@ -1,4 +1,4 @@
-package ru.netology
+package ru.netology.dataClasses
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

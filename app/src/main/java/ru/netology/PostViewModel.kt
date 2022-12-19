@@ -2,6 +2,9 @@ package ru.netology
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ru.netology.dataClasses.Post
+import ru.netology.repository.PostRepository
+import ru.netology.repository.PostRepositoryInMemoryImpl
 
 private val defaultPost = Post(
     id = 0,

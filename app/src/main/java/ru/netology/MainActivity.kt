@@ -1,22 +1,19 @@
 package ru.netology
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.launch
 import androidx.activity.viewModels
-import androidx.core.view.allViews
-import androidx.core.view.size
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.viewModelFactory
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import ru.netology.adapter.OnInteractionListener
+import ru.netology.adapter.PostAdapter
+import ru.netology.dataClasses.Post
 import ru.netology.databinding.ActivityMainBinding
-import ru.netology.databinding.PostCardBinding
+import ru.netology.utils.AndroidUtils
+import ru.netology.activity.NewPostResultContract
+import ru.netology.activity.NewPostActivity
 
 class MainActivity : AppCompatActivity() {
     val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -24,21 +21,29 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.group.visibility = View.GONE
         val viewModel: PostViewModel by viewModels()
+
         val adapter = PostAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
                 viewModel.like(post.id)
             }
 
             override fun onEdit(post: Post) {
-                binding.group.visibility = View.VISIBLE
-                binding.editContent.requestFocus()
-                binding.editContent.setText(post.content)
-                binding.editTextView.setText(post.content)
+                /*     binding.group.visibility = View.VISIBLE
+                     binding.editContent.requestFocus()
+                     binding.editContent.setText(post.content)
+                     binding.editTextView.setText(post.content)*/
+                val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
+                    result ?: return@registerForActivityResult
 
+                    viewModel.changeContent(result)
+                    viewModel.save()
+
+
+                }
                 viewModel.edit(post)
-                AndroidUtils.showKeyBoard(binding.editContent)
+                newPostLauncher.launch()
+                //    AndroidUtils.showKeyBoard(binding.editContent)
 
             }
 
@@ -53,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                     type = "text/plain"
                 }
 
-                val shareIntent=Intent.createChooser(intent, post.content)
+                val shareIntent = Intent.createChooser(intent, post.content)
                 startActivity(shareIntent)
                 viewModel.repost(post.id)
 
@@ -70,9 +75,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.data.observe(this) { posts ->
             adapter.submitList(posts)
         }
-        binding.button.setOnClickListener() {
-            viewModel.addLikesRepostsViews(1)
-        }
+
 
         viewModel.edited.observe(this) { post ->
             if (post.id == 0) {
@@ -80,52 +83,73 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-            with(binding.editContent) {
-                requestFocus()
-                setText(post.content)
-            }
         }
-        binding.saveButton.setOnClickListener() {
-            val idOfEdited = viewModel.edited.value!!.id
-            with(binding.editContent) {
-                if (text.isNullOrBlank()) {
-                    Toast.makeText(
-                        this@MainActivity,
-                        this@MainActivity.getString(R.string.error_empty_content),
-                        Toast.LENGTH_SHORT
-                    ).show()
 
+        val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
+            result ?: return@registerForActivityResult
+
+            viewModel.changeContent(result)
+            viewModel.save()
+            binding.list.smoothScrollToPosition(
+                (if (viewModel.getSizeOfPosts() > 0) {
+                    viewModel.getSizeOfPosts()-1
                 } else {
+                    0
+                })
+            )
+        }
+        binding.fab.setOnClickListener() {
 
-                    viewModel.changeContent(text.toString())
+            newPostLauncher.launch()
 
-                    viewModel.save()
-
-                }
-                binding.editContent.text.clear()
-                binding.editContent.clearFocus()
-                binding.editContent.showSoftInputOnFocus
-                binding.list.smoothScrollToPosition(
-                    (if (viewModel.getSizeOfPosts() > 0) {
-                        viewModel.findIndexOfPostById(idOfEdited)
-                    } else {
-                        0
-                    })
-                )
-
-            }
-            AndroidUtils.hideKeyBoard(binding.editContent)
-            binding.group.visibility = View.GONE
 
         }
+        /*   with(binding.editContent) {
+               requestFocus()
+               setText(post.content)
+           }*/
 
-        binding.cancelButton.setOnClickListener {
+        /*       binding.saveButton.setOnClickListener() {
+                   val idOfEdited = viewModel.edited.value!!.id
+                   with(binding.editContent) {
+                       if (text.isNullOrBlank()) {
+                           Toast.makeText(
+                               this@MainActivity,
+                               this@MainActivity.getString(R.string.error_empty_content),
+                               Toast.LENGTH_SHORT
+                           ).show()
+
+                       } else {
+
+                           viewModel.changeContent(text.toString())
+
+                           viewModel.save()
+
+                       }
+                       binding.editContent.text.clear()
+                       binding.editContent.clearFocus()
+                       binding.editContent.showSoftInputOnFocus
+                       binding.list.smoothScrollToPosition(
+                           (if (viewModel.getSizeOfPosts() > 0) {
+                               viewModel.findIndexOfPostById(idOfEdited)
+                           } else {
+                               0
+                           })
+                       )
+
+                   }
+                   AndroidUtils.hideKeyBoard(binding.editContent)
+                   binding.group.visibility = View.GONE
+
+               }*/
+
+/*        binding.cancelButton.setOnClickListener {
             binding.editContent.clearFocus()
             binding.editTextView.setText("")
             binding.group.visibility = View.GONE
             AndroidUtils.hideKeyBoard(binding.editContent)
             binding.editContent.setText("")
-        }
+        }*/
     }
 }
 

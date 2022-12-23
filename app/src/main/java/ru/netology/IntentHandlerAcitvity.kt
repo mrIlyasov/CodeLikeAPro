@@ -22,7 +22,7 @@ class IntentHandlerAcitvity : AppCompatActivity() {
 
 
 
-     /*   intent?.let {
+       intent?.let {
             if (it.action != Intent.ACTION_SEND) {
                 return@let
             }
@@ -36,7 +36,7 @@ class IntentHandlerAcitvity : AppCompatActivity() {
             } else {
                 binding.textView.text=text
             }
-        }*/
+        }
     }
 
 

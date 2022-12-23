@@ -5,10 +5,13 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 
-class NewPostResultContract : ActivityResultContract<Unit, String?>() {
+class NewPostResultContract : ActivityResultContract<String?, String?>() {
 
-    override fun createIntent(context: Context, input: Unit): Intent =
-        Intent(context, NewPostActivity::class.java)
+    override fun createIntent(context: Context, input: String?): Intent {
+        val intent = Intent(context, NewPostActivity::class.java)
+        intent.putExtra("input", input)
+        return intent
+    }
 
     override fun parseResult(resultCode: Int, intent: Intent?): String? =
         if (resultCode == Activity.RESULT_OK) {
@@ -16,4 +19,6 @@ class NewPostResultContract : ActivityResultContract<Unit, String?>() {
         } else {
             null
         }
+
+
 }

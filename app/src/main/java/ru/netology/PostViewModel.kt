@@ -28,8 +28,8 @@ class PostViewModel : ViewModel() {
     fun savePost(post: Post) = repository.savePost(post);
     fun findPost(id: Int): Post? = repository.findPost(id)
 
-    fun changeContent(content: String) {
-        val text = content.trim()
+    fun changeContent(content: String?) {
+        val text = content!!.trim()
         if (edited.value?.content == text) {
             return
         }
@@ -38,6 +38,10 @@ class PostViewModel : ViewModel() {
 
     fun save() {
         edited.value?.let { repository.savePost(it) }
+    }
+
+    fun editedDefaultPost(){
+        edited.value = defaultPost
     }
 
     fun edit(post: Post) {

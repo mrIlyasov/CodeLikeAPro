@@ -9,7 +9,7 @@ class NewPostResultContract : ActivityResultContract<String?, String?>() {
 
     override fun createIntent(context: Context, input: String?): Intent {
         val intent = Intent(context, NewPostActivity::class.java)
-        intent.putExtra("input", input)
+        intent.putExtra( Intent.EXTRA_TEXT, input)
         return intent
     }
 

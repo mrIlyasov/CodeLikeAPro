@@ -74,6 +74,15 @@
         app:layout_constraintTop_toBottomOf="@id/barrier"
         tools:text="@string/content" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/content"
+        app:srcCompat="@mipmap/youtube_foreground" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/like_button"
@@ -83,8 +92,7 @@
         android:layout_margin="16dp"
         app:icon="@drawable/like"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/content" />
-
+        app:layout_constraintTop_toBottomOf="@id/imageView" />
 
 
     <com.google.android.material.button.MaterialButton

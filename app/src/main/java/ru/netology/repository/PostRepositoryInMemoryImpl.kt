@@ -40,8 +40,11 @@ class PostRepositoryInMemoryImpl : PostRepository {
                     "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
                     "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
                     "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                    "уверенных профессионалов.", 2999, 100, 1000
-
+                    "уверенных профессионалов.",
+            2999,
+            100,
+            1000,
+            youtubeVideo = "https://www.youtube.com/watch?v=LZa3B4LkcVU&ab_channel=%D0%9C%D1%83%D0%B4%D1%80%D0%B5%D0%BD%D1%8B%D1%87"
         )
     )
 
@@ -142,7 +145,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
     }
 
     override fun findIndexOfPostById(id: Int): Int {
-       return posts.indexOf(posts.find { it.id==id })
+        return posts.indexOf(posts.find { it.id == id })
     }
 }
 

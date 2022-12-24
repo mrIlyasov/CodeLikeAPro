@@ -1,5 +1,6 @@
 package ru.netology.adapter
 
+import android.view.View
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.dataClasses.Post
@@ -20,7 +21,10 @@ class PostViewHolder(
             viewsCountTextView.text = rounding(post.views)
             shareButton.text = rounding(post.repostsCount)
             likeButton.isChecked=post.likedByMe
-
+            if (post.youtubeVideo!=null){
+                imageView.visibility= View.VISIBLE
+            }
+            else imageView.visibility = View.GONE
 
             likeButton.setOnClickListener{
                 onInteractionListener.onLike(post)

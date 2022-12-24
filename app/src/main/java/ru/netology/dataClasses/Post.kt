@@ -12,6 +12,7 @@ data class Post(
     val repostsCount: Int = 0,
     val views: Int = 0,
     val likedByMe: Boolean = false,
+    val youtubeVideo: String? = null
 ) {
 }
 

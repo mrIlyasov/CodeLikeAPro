@@ -50,7 +50,6 @@ class PostViewModel : ViewModel() {
 
     fun getIdOfEdited():Int{
         return edited.value!!.id
-
     }
 
 }

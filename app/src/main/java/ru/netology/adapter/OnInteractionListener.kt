@@ -11,4 +11,5 @@ interface OnInteractionListener {
     fun onEdit(post: Post)
     fun onRepost(post: Post)
     fun onView(post: Post)
+    fun onYoutubeClick(post: Post)
 }

@@ -1,6 +1,7 @@
 package ru.netology
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.launch
@@ -68,6 +69,16 @@ class MainActivity : AppCompatActivity() {
 
             override fun onView(post: Post) {
                 viewModel.view(post.id)
+            }
+
+            override fun onYoutubeClick(post: Post) {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(post.youtubeVideo)
+                    )
+                )
+
             }
 
         })

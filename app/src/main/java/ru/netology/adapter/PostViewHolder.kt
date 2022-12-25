@@ -22,9 +22,9 @@ class PostViewHolder(
             shareButton.text = rounding(post.repostsCount)
             likeButton.isChecked=post.likedByMe
             if (post.youtubeVideo!=null){
-                imageView.visibility= View.VISIBLE
+                buttonImageGroup.visibility= View.VISIBLE
             }
-            else imageView.visibility = View.GONE
+            else buttonImageGroup.visibility = View.GONE
 
             likeButton.setOnClickListener{
                 onInteractionListener.onLike(post)
@@ -37,6 +37,12 @@ class PostViewHolder(
             }
             viewsButton.setOnClickListener {
                 onInteractionListener.onView(post)
+            }
+            playButton.setOnClickListener{
+                onInteractionListener.onYoutubeClick(post)
+            }
+            imageView.setOnClickListener{
+                onInteractionListener.onYoutubeClick(post)
             }
 
             menuButton.setOnClickListener {

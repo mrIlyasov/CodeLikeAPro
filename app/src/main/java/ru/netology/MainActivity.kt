@@ -104,52 +104,7 @@ class MainActivity : AppCompatActivity() {
 
 
         }
-        /*   with(binding.editContent) {
-               requestFocus()
-               setText(post.content)
-           }*/
 
-        /*       binding.saveButton.setOnClickListener() {
-                   val idOfEdited = viewModel.edited.value!!.id
-                   with(binding.editContent) {
-                       if (text.isNullOrBlank()) {
-                           Toast.makeText(
-                               this@MainActivity,
-                               this@MainActivity.getString(R.string.error_empty_content),
-                               Toast.LENGTH_SHORT
-                           ).show()
-
-                       } else {
-
-                           viewModel.changeContent(text.toString())
-
-                           viewModel.save()
-
-                       }
-                       binding.editContent.text.clear()
-                       binding.editContent.clearFocus()
-                       binding.editContent.showSoftInputOnFocus
-                       binding.list.smoothScrollToPosition(
-                           (if (viewModel.getSizeOfPosts() > 0) {
-                               viewModel.findIndexOfPostById(idOfEdited)
-                           } else {
-                               0
-                           })
-                       )
-
-                   }
-                   AndroidUtils.hideKeyBoard(binding.editContent)
-                   binding.group.visibility = View.GONE
-
-               }*/
-
-/*        binding.cancelButton.setOnClickListener {
-            binding.editContent.clearFocus()
-            binding.editTextView.setText("")
-            binding.group.visibility = View.GONE
-            AndroidUtils.hideKeyBoard(binding.editContent)
-            binding.editContent.setText("")
-        }*/
     }
 }
 

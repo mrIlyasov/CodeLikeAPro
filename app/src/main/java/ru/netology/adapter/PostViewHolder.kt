@@ -1,9 +1,10 @@
-package ru.netology
+package ru.netology.adapter
 
 import android.view.View
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import ru.netology.databinding.ActivityMainBinding
+import ru.netology.dataClasses.Post
+import ru.netology.R
 import ru.netology.databinding.PostCardBinding
 
 class PostViewHolder(
@@ -17,12 +18,13 @@ class PostViewHolder(
             date.text = post.date
             content.text = post.content
             likeButton.text=rounding(post.likes)
-
             viewsCountTextView.text = rounding(post.views)
             shareButton.text = rounding(post.repostsCount)
-
             likeButton.isChecked=post.likedByMe
-
+            if (post.youtubeVideo!=null){
+                buttonImageGroup.visibility= View.VISIBLE
+            }
+            else buttonImageGroup.visibility = View.GONE
 
             likeButton.setOnClickListener{
                 onInteractionListener.onLike(post)
@@ -35,6 +37,12 @@ class PostViewHolder(
             }
             viewsButton.setOnClickListener {
                 onInteractionListener.onView(post)
+            }
+            playButton.setOnClickListener{
+                onInteractionListener.onYoutubeClick(post)
+            }
+            imageView.setOnClickListener{
+                onInteractionListener.onYoutubeClick(post)
             }
 
             menuButton.setOnClickListener {

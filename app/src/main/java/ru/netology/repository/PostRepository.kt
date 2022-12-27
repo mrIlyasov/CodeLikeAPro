@@ -1,6 +1,7 @@
-package ru.netology
+package ru.netology.repository
 
 import androidx.lifecycle.LiveData
+import ru.netology.dataClasses.Post
 
 interface PostRepository {
     fun get(): LiveData<List<Post>>
@@ -12,6 +13,7 @@ interface PostRepository {
     fun edit(id: Int, newContent: String)
     fun savePost(post: Post)
     fun addLikesRepostsViews(id: Int)
+    fun findIndexOfPostById(id:Int): Int
     fun findPost(id: Int): Post?
 
 }

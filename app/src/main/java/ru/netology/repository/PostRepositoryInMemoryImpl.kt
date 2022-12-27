@@ -1,10 +1,8 @@
-package ru.netology
+package ru.netology.repository
 
-import android.app.Application
-import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import ru.netology.dataClasses.Post
 
 class PostRepositoryInMemoryImpl : PostRepository {
     var nextId = 1
@@ -19,7 +17,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
                     "уверенных профессионалов.Привет, это новая Нетология! Когда-то Нетология начиналась с " +
                     "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
                     "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                    "уверенных профессионалов.", 19, 100, 100
+                    "уверенных профессионалов.", 19, 100, 100,
+            youtubeVideo = "https://www.youtube.com/watch?v=LXGShpmAlV4&ab_channel=%D0%9D%D0%B5%D1%82%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8F"
         ),
         Post(
             nextId++,
@@ -42,8 +41,11 @@ class PostRepositoryInMemoryImpl : PostRepository {
                     "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
                     "интенсива по онлайн-маркетингу. Затем появились курсы по дизайну, аналитике, " +
                     "разработке и управлению. Мы растём сами и помогаем расти студентам: от новичков до " +
-                    "уверенных профессионалов.", 2999, 100, 1000
-
+                    "уверенных профессионалов.",
+            2999,
+            100,
+            1000,
+            youtubeVideo = "https://www.youtube.com/watch?v=LZa3B4LkcVU&ab_channel=%D0%9C%D1%83%D0%B4%D1%80%D0%B5%D0%BD%D1%8B%D1%87"
         )
     )
 
@@ -56,11 +58,14 @@ class PostRepositoryInMemoryImpl : PostRepository {
     }
 
     override fun repost(id: Int) {
+
         posts = posts.map {
-            if (it.id == id) it.copy(repostsCount = it.repostsCount + 1)
+            if (it.id == id)
+                it.copy(repostsCount = it.repostsCount + 1)
             else it
         }
         data.value = posts
+
 
     }
 
@@ -125,17 +130,23 @@ class PostRepositoryInMemoryImpl : PostRepository {
                     date = "now"
                 )
             )
+
         } else
             newPosts = posts.map {
                 if (it.id == post.id) it.copy(content = post.content) else it
             }.toMutableList()
         posts = newPosts
         data.value = posts
+
     }
 
     override fun findPost(id: Int): Post? {
         return posts.find { it.id == id }
 
+    }
+
+    override fun findIndexOfPostById(id: Int): Int {
+        return posts.indexOf(posts.find { it.id == id })
     }
 }
 

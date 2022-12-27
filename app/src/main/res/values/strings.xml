@@ -17,4 +17,6 @@
     <string name="post_text">Input text of post</string>
     <string name="error_empty_content">Content can`t be emty</string>
     <string name="error_post_not_found">Post not found</string>
+    <string name="add_post">Add new post</string>
+
 </resources>

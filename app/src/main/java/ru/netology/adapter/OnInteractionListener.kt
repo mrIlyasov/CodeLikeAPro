@@ -1,4 +1,6 @@
-package ru.netology
+package ru.netology.adapter
+
+import ru.netology.dataClasses.Post
 
 typealias OnInteracionLitener = (post: Post) -> Unit
 
@@ -9,4 +11,5 @@ interface OnInteractionListener {
     fun onEdit(post: Post)
     fun onRepost(post: Post)
     fun onView(post: Post)
+    fun onYoutubeClick(post: Post)
 }

@@ -80,17 +80,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
     }
 
 
-    override fun addLikesRepostsViews(id: Int) {
 
-        posts = posts.map {
-            if (it.id == id) it.copy(
-                likes = it.likes + 1000,
-                repostsCount = it.repostsCount + 200,
-                views = it.views + 10000
-            ) else it
-        }
-        data.value = posts
-    }
 
 
     override fun like(id: Int) {

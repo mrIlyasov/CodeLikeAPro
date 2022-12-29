@@ -1,11 +1,16 @@
 package ru.netology.repository
 
 import android.content.Context
+import android.content.Intent
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import ru.netology.MainActivity
 import ru.netology.dataClasses.Post
+import java.io.File
+import java.io.FileOutputStream
 
 class PostRepositoryInFileImpl(
     private val context: Context,
@@ -13,13 +18,15 @@ class PostRepositoryInFileImpl(
     private val gson = Gson()
     private val type = TypeToken.getParameterized(List::class.java, Post::class.java).type
     private val filename = "posts.json"
-
-    private var nextId = 1
+    private val prefs = context.getSharedPreferences("nextId", Context.MODE_PRIVATE)
+    private val key = "nextId"
+    var nextId = prefs.getInt(key, 0)
     private var posts = emptyList<Post>()
     private val data = MutableLiveData(posts)
 
 
     init {
+        nextId = prefs.getInt(key, 1).apply{  }
         val file = context.filesDir.resolve(filename)
 
         if (file.exists()) {
@@ -27,9 +34,11 @@ class PostRepositoryInFileImpl(
             context.openFileInput(filename).bufferedReader().use {
                 posts = gson.fromJson(it, type)
                 data.value = posts
-            }
-        } else {
 
+            }
+
+
+        } else {
             sync()
         }
     }
@@ -60,7 +69,6 @@ class PostRepositoryInFileImpl(
     }
 
 
-
     override fun repost(id: Int) {
 
         posts = posts.map {
@@ -80,30 +88,31 @@ class PostRepositoryInFileImpl(
             else it
         }
 
+
         data.value = posts
     }
 
     override fun savePost(post: Post) {
-        if (post.id == 0) {
-
-            posts = listOf(
+        var newPosts = mutableListOf<Post>()
+        if (posts.find { it.id == post.id } == null) {
+            newPosts.addAll(posts)
+            newPosts.add(
                 post.copy(
-                    id = nextId++,
+                    nextId,
                     authorName = "Me",
                     likedByMe = false,
                     date = "now"
                 )
-            ) + posts
-            data.value = posts
-            sync()
-            return
-        }
+            )
 
-        posts = posts.map {
-            if (it.id != post.id) it else it.copy(content = post.content)
-        }
+        } else
+            newPosts = posts.map {
+                if (it.id == post.id) it.copy(content = post.content) else it
+            }.toMutableList()
+        posts = newPosts
         data.value = posts
         sync()
+
     }
 
     override fun like(id: Int) {
@@ -127,5 +136,21 @@ class PostRepositoryInFileImpl(
         context.openFileOutput(filename, Context.MODE_PRIVATE).bufferedWriter().use {
             it.write(gson.toJson(posts))
         }
+        prefs.edit().apply{
+            putInt(key, nextId++)
+            commit()
+        }
+
+
     }
+
+
+    override fun addNextId(): Int {
+        val file = context.filesDir.resolve("nextIdFile")
+        nextId = File(file.name).bufferedReader().readLine().toInt() + 1
+        return nextId
+
+
+    }
+
 }

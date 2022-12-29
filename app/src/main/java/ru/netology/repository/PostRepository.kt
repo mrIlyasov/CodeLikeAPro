@@ -15,6 +15,6 @@ interface PostRepository {
 
     fun findIndexOfPostById(id:Int): Int
     fun findPost(id: Int): Post?
-
+    fun addNextId(): Int
 
 }

@@ -30,6 +30,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun savePost(post: Post) = repository.savePost(post);
     fun findPost(id: Int): Post? = repository.findPost(id)
 
+
     fun changeContent(content: String?) {
         val text = content!!.trim()
         if (edited.value?.content == text) {

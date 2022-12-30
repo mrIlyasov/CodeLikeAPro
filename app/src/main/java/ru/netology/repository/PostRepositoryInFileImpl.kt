@@ -26,7 +26,7 @@ class PostRepositoryInFileImpl(
 
 
     init {
-        nextId = prefs.getInt(key, 1).apply{  }
+        nextId = prefs.getInt(key, 1).apply { }
         val file = context.filesDir.resolve(filename)
 
         if (file.exists()) {
@@ -66,6 +66,7 @@ class PostRepositoryInFileImpl(
         }
         data.value = posts
 
+
     }
 
 
@@ -77,7 +78,7 @@ class PostRepositoryInFileImpl(
             else it
         }
         data.value = posts
-
+        sync()
 
     }
 
@@ -90,6 +91,7 @@ class PostRepositoryInFileImpl(
 
 
         data.value = posts
+        sync()
     }
 
     override fun savePost(post: Post) {
@@ -99,11 +101,12 @@ class PostRepositoryInFileImpl(
             newPosts.add(
                 post.copy(
                     nextId,
-                    authorName = "Me",
+                    authorName = "Me $nextId",
                     likedByMe = false,
                     date = "now"
                 )
             )
+            addNextId()
 
         } else
             newPosts = posts.map {
@@ -136,19 +139,18 @@ class PostRepositoryInFileImpl(
         context.openFileOutput(filename, Context.MODE_PRIVATE).bufferedWriter().use {
             it.write(gson.toJson(posts))
         }
-        prefs.edit().apply{
-            putInt(key, nextId++)
-            commit()
-        }
 
 
     }
 
+    override fun addNextId() {
 
-    override fun addNextId(): Int {
-        val file = context.filesDir.resolve("nextIdFile")
-        nextId = File(file.name).bufferedReader().readLine().toInt() + 1
-        return nextId
+        prefs.edit().apply {
+            putInt(key, nextId+1)
+            commit()
+        }
+        nextId = prefs.getInt(key, nextId)
+
 
 
     }

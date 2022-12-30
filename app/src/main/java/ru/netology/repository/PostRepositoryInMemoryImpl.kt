@@ -139,8 +139,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
         return posts.indexOf(posts.find { it.id == id })
     }
 
-    override fun addNextId(): Int {
-        return 1
+    override fun addNextId() {
         TODO("Not yet implemented")
     }
 }

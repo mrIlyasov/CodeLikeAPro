@@ -1,4 +1,4 @@
-package ru.netology
+package netology
 
 import org.junit.Test
 

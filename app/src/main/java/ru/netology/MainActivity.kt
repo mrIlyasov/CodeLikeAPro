@@ -101,8 +101,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.fab.setOnClickListener() {
             newPostLauncher.launch("")
-
-
         }
 
     }
